@@ -7,23 +7,18 @@ app.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
 app.get('/start', (req, res) => {
-    fs.appendFile('Count', '\n Nazmul is a good boy.', () => { })
+    fs.writeFile('Count', '0', () => { })
     res.send('You have writen')
 })
 app.get('/num', (req, res) => {
     fs.readFile("Count", 'utf8', (err, data) => {
-        res.send(data)
+        const x = parseInt(data) + 1
+        const text = x.toString()
+        fs.writeFile('Count', text, () => { })
+        res.send("Count increased")
     })
 })
-app.get('/namaz', (req, res) => {
-    fs.appendFile('Five', ' Tahazzud', () => { })
-    res.send('Al Hamdulillah')
-})
-app.get('/salatname', (req, res) => {
-    fs.readFile("Five", 'utf8', (err, data) => {
-        res.send(data)
-    })
-})
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
