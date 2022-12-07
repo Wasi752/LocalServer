@@ -10,34 +10,18 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
-app.get('/employees', (req, res) => {
+app.get('/results', (req, res) => {
     fs.readFile("database", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
-        res.send(JSON.stringify(allData.employees))
+        res.send(JSON.stringify(allData.results))
     })
 })
-app.post('/create-employee', (req, res) => {
+app.post('/create-result', (req, res) => {
     fs.readFile("database", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
-        const employeeData = req.body;
-        employeeData.id = allData.employees.length + 1;
-        allData.employees.push(employeeData) 
-        fs.writeFile('database', JSON.stringify(allData), () => { })
-        res.send(`${req.body.name}`)
-    })
-})
-app.get('/departments', (req, res) => {
-    fs.readFile("database", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        res.send(JSON.stringify(allData.departments))
-    })
-})
-app.post('/create-department', (req, res) => {
-    fs.readFile("database", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const departmentData = req.body;
-        departmentData.id = allData.departments.length + 1; 
-        allData.departments.push(departmentData) 
+        const resultData = req.body;
+        resultData.id = allData.results.length + 1;
+        allData.results.push(resultData) 
         fs.writeFile('database', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
