@@ -1,0 +1,25 @@
+{
+    "employees": [
+        {
+            "name": "Wasiur Rahman",
+            "designation": "Office Secretary",
+            "e_mail": "osiur2@gmail.com",
+            "phone": 1912304752,
+            "id": 1
+        },
+        {
+            "name": "A Alim",
+            "designation": "Office Manager",
+            "e_mail": "haiawer@gmail.com",
+            "phone": "01923456784",
+            "id": 2
+        },
+        {
+            "name": "Hamid Mir",
+            "designation": "Boss",
+            "e_mail": "rewqtuy@gmail.com",
+            "phone": "01345678904",
+            "id": 3
+        }
+    ]
+}
