@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3001 
 const fs = require("fs")
 const { parse } = require('path')
 const bodyParser = require('body-parser');
@@ -47,6 +47,7 @@ app.post('/create-employee', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
