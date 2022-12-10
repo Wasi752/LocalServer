@@ -63,12 +63,22 @@ app.post('/create-student', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
-app.get('/registared-students',(req, res)=>{
-    const data = {"registared-students": []}; 
-    fs.writeFile('registration', JSON.stringify(data), () => { })
-    res.send("File saved")
+app.get('/registared-students', (req, res) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        res.send(JSON.stringify(allData.registared-students))
+    })
 })
-
+app.post('/create-registration', (req, res) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const registrationData = req.body;
+        registrationData.id = allData.registared-students.length + 1;
+        allData.registared-students.push(registrationData) 
+        fs.writeFile('registration', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
