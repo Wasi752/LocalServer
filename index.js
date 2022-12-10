@@ -63,6 +63,15 @@ app.post('/create-student', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
+app.get('/students/:id', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        const studentInfoByID = allData.students.find(x => x.id == req.params.id); 
+        console.log(studentInfoByID);
+        res.send(JSON.stringify(studentInfoByID))
+    })
+})
+
 app.get('/registared-students', (req, res) => {
     fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
