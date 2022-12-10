@@ -31,22 +31,44 @@ app.post('/create-result', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
-app.get('/employees', (req, res) => {
+app.get('/madrasas', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
-        res.send(JSON.stringify(allData.employees))
+        res.send(JSON.stringify(allData.madrasas))
     })
 })
-app.post('/create-employee', (req, res) => {
+app.post('/create-madrasa', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
-        const employeeData = req.body;
-        employeeData.id = allData.employees.length + 1;
-        allData.employees.push(employeeData) 
+        const madrasaData = req.body;
+        madrasaData.id = allData.madrasas.length + 1;
+        allData.madrasas.push(madrasaData) 
         fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
+app.get('/students', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        res.send(JSON.stringify(allData.students))
+    })
+})
+app.post('/create-student', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const studentData = req.body;
+        studentData.id = allData.students.length + 1;
+        allData.students.push(studentData) 
+        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
+app.get('/registared-students',(req, res)=>{
+    const data = {"registared-students": []}; 
+    fs.writeFile('registration', JSON.stringify(data), () => { })
+    res.send("File saved")
+})
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

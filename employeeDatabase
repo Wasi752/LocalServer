@@ -1,1 +1,61 @@
-{"employees":[{"name":"Wahid","designation":"Imam","e_mail":"werty67@gmail.com","phone":"6543209823","id":1},{"name_arabic":"Al jameya","name_bangala":"Jamia Sharyeah Mailibug","name_english":"Jamia Sharyeah Malibug Madrasa","address":"kazla (Press), Dania, Jatrabari ","e_mail":"wsert4@gmail.com","phone":"01234567890","muhtamim":"Aminul islam","nazim":"Mamnunul haq","code_no":"5678","ilhaq_no":"567/98","board":"befaq","jela":"dhaka","division":"dhaka","id":2}]}
+{
+    "madrasas": [
+        {
+            "name": "Wahid",
+            "designation": "Imam",
+            "e_mail": "werty67@gmail.com",
+            "phone": "6543209823",
+            "id": 1
+        },
+        {
+            "name_arabic": "Al jameya",
+            "name_bangala": "Jamia Sharyeah Mailibug",
+            "name_english": "Jamia Sharyeah Malibug Madrasa",
+            "address": "kazla (Press), Dania, Jatrabari ",
+            "e_mail": "wsert4@gmail.com",
+            "phone": "01234567890",
+            "muhtamim": "Aminul islam",
+            "nazim": "Mamnunul haq",
+            "code_no": "5678",
+            "ilhaq_no": "567/98",
+            "board": "befaq",
+            "jela": "dhaka",
+            "division": "dhaka",
+            "id": 2
+        },
+        {
+            "name_arabic": "Jamea Al Islamia",
+            "name_bangala": "Jamea Al Islamia",
+            "name_english": "Jamea Al Islamia",
+            "address": "kazla, Jatrabari",
+            "e_mail": "tyredf@gmail.com",
+            "phone": "01324566789",
+            "muhtamim": "Al Amin",
+            "nazim": "Al Karim",
+            "code_no": "5643",
+            "ilhaq_no": "765",
+            "board": "befaq",
+            "jela": "Dhaka",
+            "division": "Dhaka",
+            "id": 3
+        }
+    ],
+    "students": [
+        {
+            "name_arabic": "aswderft",
+            "name_bangala": "hjytrfd",
+            "name_english": "mkljuh",
+            "address": "hygtrfde",
+            "e_mail": "ewrtds@gmail.com",
+            "phone": "09876543290",
+            "muhtamim": "kjhiu",
+            "nazim": "fdret",
+            "code_no": "9876",
+            "ilhaq_no": "23456",
+            "board": "befaq",
+            "jela": "Kumilla",
+            "division": "Kumilla",
+            "id": 1
+        }
+    ]
+}
