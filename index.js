@@ -31,6 +31,22 @@ app.post('/create-employee', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
+app.get('/boards', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        res.send(JSON.stringify(allData.boards))
+    })
+})
+app.post('/create-board', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const boardData = req.body;
+        boardData.id = allData.boards.length + 1;
+        allData.boards.push(boardData) 
+        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
 app.get('/results', (req, res) => {
     fs.readFile("database", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
