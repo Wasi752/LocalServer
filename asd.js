@@ -1,3 +1,12 @@
+
+app.get('/students/:id', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        const studentInfoByID = allData.students.find(x => x.id == req.params.id); 
+        console.log(studentInfoByID);
+        res.send(JSON.stringify(studentInfoByID))
+    })
+})
 app.put('/students/:id', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 

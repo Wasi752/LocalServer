@@ -15,6 +15,22 @@ app.use(cors({
 app.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
+app.get('/employees', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data) 
+        res.send(JSON.stringify(allData.employees))
+    })
+})
+app.post('/create-employee', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const employeeData = req.body;
+        employeeData.id = allData.employees.length + 1;
+        allData.employees.push(employeeData) 
+        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
 app.get('/results', (req, res) => {
     fs.readFile("database", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
