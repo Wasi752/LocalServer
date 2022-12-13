@@ -48,18 +48,18 @@ app.post('/create-board', (req, res) => {
     })
 })
 app.get('/results', (req, res) => {
-    fs.readFile("database", 'utf8', (err, data) => {
+    fs.readFile("madrasa", 'utf8', (err, data) => {
         const allData = JSON.parse(data) 
         res.send(JSON.stringify(allData.results))
     })
 })
 app.post('/create-result', (req, res) => {
-    fs.readFile("database", 'utf8', (err, data) => {
+    fs.readFile("madrasa", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const resultData = req.body;
         resultData.id = allData.results.length + 1;
         allData.results.push(resultData) 
-        fs.writeFile('database', JSON.stringify(allData), () => { })
+        fs.writeFile('madrasa', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
