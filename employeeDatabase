@@ -531,7 +531,7 @@
             "id": 1
         },
         {
-            "name_arabic": "Abdullah Maruf",
+            "name_arabic": "Rashid",
             "name_bangala": "hjytrfd",
             "name_english": "mkljuh",
             "address": "hygtrfde",
@@ -547,7 +547,7 @@
             "id": 2
         },
         {
-            "name_arabic": "Abdullah Maruf",
+            "name_arabic": "Abdullah",
             "name_bangala": "hjytrfd",
             "name_english": "mkljuh",
             "address": "hygtrfde",
@@ -560,7 +560,7 @@
             "board": "befaq",
             "jela": "Kumilla",
             "division": "Kumilla",
-            "id": 2
+            "id": 3
         }
     ]
 }
