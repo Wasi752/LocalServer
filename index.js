@@ -1,23 +1,24 @@
 const express = require('express')
 const app = express()
-const port = 3001 
+const port = 3001
 const fs = require("fs")
 const { parse } = require('path')
 const bodyParser = require('body-parser');
 const cors = require("cors");
+const { json } = require('express')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(cors({
-    origin : 'http://localhost:3000',
+    origin: 'http://localhost:3000',
     credentials: true, // <= Accept credentials (cookies) sent by the client
-  }));
+}));
 
 app.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
 app.get('/employees', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.employees))
     })
 })
@@ -26,14 +27,14 @@ app.post('/create-employee', (req, res) => {
         const allData = JSON.parse(data)
         const employeeData = req.body;
         employeeData.id = allData.employees.length + 1;
-        allData.employees.push(employeeData) 
+        allData.employees.push(employeeData)
         fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.get('/boards', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.boards))
     })
 })
@@ -42,14 +43,14 @@ app.post('/create-board', (req, res) => {
         const allData = JSON.parse(data)
         const boardData = req.body;
         boardData.id = allData.boards.length + 1;
-        allData.boards.push(boardData) 
+        allData.boards.push(boardData)
         fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.get('/results', (req, res) => {
     fs.readFile("madrasa", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.results))
     })
 })
@@ -58,14 +59,14 @@ app.post('/create-result', (req, res) => {
         const allData = JSON.parse(data)
         const resultData = req.body;
         resultData.id = allData.results.length + 1;
-        allData.results.push(resultData) 
+        allData.results.push(resultData)
         fs.writeFile('madrasa', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.get('/madrasas', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.madrasas))
     })
 })
@@ -74,14 +75,14 @@ app.post('/create-madrasa', (req, res) => {
         const allData = JSON.parse(data)
         const madrasaData = req.body;
         madrasaData.id = allData.madrasas.length + 1;
-        allData.madrasas.push(madrasaData) 
+        allData.madrasas.push(madrasaData)
         fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.get('/students', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.students))
     })
 })
@@ -90,38 +91,61 @@ app.post('/create-student', (req, res) => {
         const allData = JSON.parse(data)
         const studentData = req.body;
         studentData.id = allData.students.length + 1;
-        allData.students.push(studentData) 
+        allData.students.push(studentData)
         fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.put('/students/:id', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
+        const allData = JSON.parse(data)
         const studentInfoByID = allData.students.find(x => x.id == req.params.id);
         studentInfoByID.name_arabic = req.body.name_arabic;
         fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
         res.send(JSON.stringify(studentInfoByID))
-    }) 
+    })
 })
 
 app.get('/registared-students', (req, res) => {
     fs.readFile("registration", 'utf8', (err, data) => {
-        const allData = JSON.parse(data) 
-        res.send(JSON.stringify(allData.registared-students))
+        const allData = JSON.parse(data)
+        res.send(JSON.stringify(allData.registared - students))
     })
 })
 app.post('/create-registration', (req, res) => {
     fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const registrationData = req.body;
-        registrationData.id = allData.registared-students.length + 1;
-        allData.registared-students.push(registrationData) 
+        registrationData.id = allData.registared - students.length + 1;
+        allData.registared - students.push(registrationData)
         fs.writeFile('registration', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
-
+app.post("/signin", (req, res) => {
+    fs.readFile("database", "utf8", (err, data) => {
+        const allData = JSON.parse(data);
+        const userData = req.body;
+        const fusers = allData.users
+            .filter(user => user.username === userData.username && user.password === userData.password)
+        if (fusers.length > 0) {
+            res.send(JSON.stringify(fusers[0]));
+        }
+        else {
+            res.status(400).send()
+        }
+    });
+});
+app.post("/signup", (req, res) => {
+    fs.readFile("database", "utf8", (err, data) => {
+        const allData = JSON.parse(data);
+        const userData = req.body;
+        userData.id = allData.users.length + 1;
+        allData.users.push(userData);
+        fs.writeFile("database", JSON.stringify(allData), () => { });
+        res.send(JSON.stringify(userData));
+    });
+});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
