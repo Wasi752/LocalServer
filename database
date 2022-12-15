@@ -240,6 +240,19 @@
             "muwattan": 34,
             "id": 15
         }
+    ],
+    "users": [
+        {
+            "username": "Wasiur Rahman",
+            "email": "osiur2@gmail.com",
+            "password": "12345678",
+            "id": 1
+        },
+        {
+            "username": "Abdullah Mahmud",
+            "email": "osiur2@gmail.com",
+            "password": "1021981",
+            "id": 2
+        }
     ]
-
 }
