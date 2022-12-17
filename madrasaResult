@@ -2,14 +2,15 @@
     "results": [
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 1,
+            "mcode": 1111,
+            "roll": 101,
             "name": "Amirul Islam",
             "bukhari1": 87,
             "bukhari2": 91,
             "muslim1": 88,
             "muslim2": 89,
             "tirmizi1": 90,
-            "tirmizi_2": 94,
+            "tirmizi2": 94,
             "abudaud": 81,
             "nasayee": 92,
             "tahabi": 83,
@@ -18,7 +19,8 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 2,
+            "mcode": 1111,
+            "roll": 102,
             "name": "Aminul Islam",
             "bukhari1": 89,
             "bukhari2": 85,
@@ -34,8 +36,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 3,
-            "name": "Mominul Islam",
+            "mcode": 1111,
+            "roll": 103,
+            "name": "Momin Islam",
             "bukhari1": 89,
             "bukhari2": 75,
             "muslim1": 85,
@@ -50,8 +53,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 4,
-            "name": "Mamunul Haque",
+            "mcode": 1111,
+            "roll": 104,
+            "name": "Mamnun Haq",
             "bukhari1": 69,
             "bukhari2": 75,
             "muslim1": 65,
@@ -66,8 +70,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 5,
-            "name": "Ahmadul Haque",
+            "mcode": 1111,
+            "roll": 105,
+            "name": "Ahmadul Haq",
             "bukhari1": 60,
             "bukhari2": 65,
             "muslim1": 59,
@@ -82,8 +87,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 6,
-            "name": "Ahmadullah",
+            "mcode": 1111,
+            "roll": 106,
+            "name": "Ahmad Ullah",
             "bukhari1": 60,
             "bukhari2": 61,
             "muslim1": 59,
@@ -98,7 +104,8 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 7,
+            "mcode": 1111,
+            "roll": 107,
             "name": "Alahi Bakhsh",
             "bukhari1": 40,
             "bukhari2": 51,
@@ -114,7 +121,8 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 8,
+            "mcode": 1111,
+            "roll": 108,
             "name": "Bazme Alahi",
             "bukhari1": 33,
             "bukhari2": 41,
@@ -130,8 +138,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 9,
-            "name": "Basim",
+            "mcode": 1111,
+            "roll": 109,
+            "name": "AhmadBasim",
             "bukhari1": 33,
             "bukhari2": 41,
             "muslim1": 39,
@@ -146,8 +155,9 @@
         },
         {
             "mname": "Darul Uloom Al-Islamia Dhaka",
-            "roll": 10,
-            "name": "Bahauddin",
+            "mcode": 1111,
+            "roll": 110,
+            "name": "A Bahauddin",
             "bukhari1": 33,
             "bukhari2": 31,
             "muslim1": 32,
@@ -162,7 +172,8 @@
         },
         {
             "mname": "Baytul Uloom Al-Islamia Dhaka",
-            "roll": 11,
+            "mcode": 1112,
+            "roll": 111,
             "name": "Azimuddin",
             "bukhari1": 83,
             "bukhari2": 81,
@@ -178,7 +189,8 @@
         },
         {
             "mname": "Baytul Uloom Al-Islamia Dhaka",
-            "roll": 12,
+            "mcode": 1112,
+            "roll": 120,
             "name": "Karimuddin",
             "bukhari1": 73,
             "bukhari2": 71,
@@ -194,7 +206,8 @@
         },
         {
             "mname": "Baytul Uloom Al-Islamia Dhaka",
-            "roll": 13,
+            "mcode": 1112,
+            "roll": 130,
             "name": "Afdal Hossain",
             "bukhari1": 63,
             "bukhari2": 61,
@@ -210,8 +223,9 @@
         },
         {
             "mname": "Baytul Uloom Al-Islamia Dhaka",
-            "roll": 14,
-            "name": "Noman",
+            "mcode": 1112,
+            "roll": 140,
+            "name": "Noman Ali",
             "bukhari1": 37,
             "bukhari2": 48,
             "muslim1": 43,
@@ -226,8 +240,9 @@
         },
         {
             "mname": "Baytul Uloom Al-Islamia Dhaka",
-            "roll": 15,
-            "name": "Nazimuddin Arbakan",
+            "mcode": 1112,
+            "roll": 150,
+            "name": "Nazimuddin",
             "bukhari1": 33,
             "bukhari2": 31,
             "muslim1": 32,
@@ -239,50 +254,6 @@
             "tahabi": 33,
             "muwattan": 34,
             "id": 15
-        }
-    ],
-    "users": [
-        {
-            "username": "Wasiur Rahman",
-            "email": "osiur2@gmail.com",
-            "password": "12345678",
-            "id": 1
-        },
-        {
-            "username": "Abdullah Mahmud",
-            "email": "osiur2@gmail.com",
-            "password": "1021981",
-            "id": 2
-        },
-        {
-            "username": "A Rahim",
-            "email": "q2w3ert@gmail.com",
-            "password": "12345678",
-            "id": 3
-        },
-        {
-            "username": "A Halim",
-            "email": "wade@gmail.com",
-            "password": "123456",
-            "id": 4
-        },
-        {
-            "username": "A Batin",
-            "email": "wasdr@gmail.com",
-            "password": "123456",
-            "id": 5
-        }
-    ],
-    "images": [
-        {
-            "name": "A Karim Munshi",
-            "image": "1.jpeg",
-            "id": 1
-        },
-        {
-            "name": "A Karim Munshi",
-            "image": "2.jpeg",
-            "id": 2
         }
     ]
 }

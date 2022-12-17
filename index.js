@@ -50,34 +50,34 @@ app.post('/create-board', (req, res) => {
     })
 })
 app.get('/results', (req, res) => {
-    fs.readFile("madrasa", 'utf8', (err, data) => {
+    fs.readFile("madrasaResult", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.results))
     })
 })
-app.post('/create-result', (req, res) => {
-    fs.readFile("madrasa", 'utf8', (err, data) => {
+app.post('/result', (req, res) => {
+    fs.readFile("madrasaResult", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const resultData = req.body;
         resultData.id = allData.results.length + 1;
         allData.results.push(resultData)
-        fs.writeFile('madrasa', JSON.stringify(allData), () => { })
+        fs.writeFile('madrasaResult', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
 app.get('/madrasas', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.madrasas))
     })
 })
-app.post('/create-madrasa', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+app.post('/madrasa', (req, res) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const madrasaData = req.body;
         madrasaData.id = allData.madrasas.length + 1;
         allData.madrasas.push(madrasaData)
-        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
+        fs.writeFile('ragistration', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
