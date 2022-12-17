@@ -176,6 +176,24 @@
             "name": "Abdul Mazed",
             "image": "3.jpeg",
             "id": 3
+        },
+        {
+            "name": "Wasi",
+            "father": "Habib",
+            "mother": "Parvin",
+            "present_address": "32 Polashpur",
+            "permanent_ddress": "Jafrabad",
+            "academic_achievement": "Dawra-e Hadis",
+            "languages_skills": "Arabic, bn, En",
+            "designation": "Secretary",
+            "contact_no": "01912304752",
+            "e_mail": "osiur2@gmail.com",
+            "room_no": "",
+            "image": "4.jpeg",
+            "nationality": "",
+            "brith": "10/2/1981",
+            "nid": "",
+            "id": 4
         }
     ]
 }
