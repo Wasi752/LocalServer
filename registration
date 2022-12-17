@@ -161,5 +161,21 @@
             "id": 10
         }
     ],
-    "students": []
+    "students": [
+        {
+            "name": "Wasiur Rahman",
+            "image": "1.jpeg",
+            "id": 1
+        },
+        {
+            "name": "wasi ibn Habib",
+            "image": "2.jpeg",
+            "id": 2
+        },
+        {
+            "name": "Farhan",
+            "image": "3.jpeg",
+            "id": 3
+        }
+    ]
 }

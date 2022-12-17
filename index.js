@@ -147,17 +147,17 @@ app.post("/signup", (req, res) => {
         res.send(JSON.stringify(userData));
     });
 });
-app.post("/imageUpload", (req, res) => {
-    fs.readFile("database", "utf8", (err, data) => {
+app.post("/studentRegistration", (req, res) => {
+    fs.readFile("registration", "utf8", (err, data) => {
         const allData = JSON.parse(data);
         const reqData = req.body;
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
-        reqData.id = allData.images.length + 1;
+        reqData.id = allData.students.length + 1;
         fs.writeFile(`public/${reqData.id}.jpeg`, buffer, () => { });
         reqData.image = `${reqData.id}.jpeg`;
-        allData.images.push(reqData);
-        fs.writeFile("database", JSON.stringify(allData), () => { });
+        allData.students.push(reqData);
+        fs.writeFile("registration", JSON.stringify(allData), () => { });
         res.send(JSON.stringify(reqData));
     });
 });
