@@ -81,48 +81,6 @@ app.post('/madrasa', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
-app.get('/students', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        res.send(JSON.stringify(allData.students))
-    })
-})
-app.post('/create-student', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const studentData = req.body;
-        studentData.id = allData.students.length + 1;
-        allData.students.push(studentData)
-        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
-        res.send(`${req.body.name}`)
-    })
-})
-app.put('/students/:id', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const studentInfoByID = allData.students.find(x => x.id == req.params.id);
-        studentInfoByID.name_arabic = req.body.name_arabic;
-        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
-        res.send(JSON.stringify(studentInfoByID))
-    })
-})
-
-app.get('/registared-students', (req, res) => {
-    fs.readFile("registration", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        res.send(JSON.stringify(allData.registared - students))
-    })
-})
-app.post('/create-registration', (req, res) => {
-    fs.readFile("registration", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const registrationData = req.body;
-        registrationData.id = allData.registared - students.length + 1;
-        allData.registared - students.push(registrationData)
-        fs.writeFile('registration', JSON.stringify(allData), () => { })
-        res.send(`${req.body.name}`)
-    })
-})
 app.post("/signin", (req, res) => {
     fs.readFile("database", "utf8", (err, data) => {
         const allData = JSON.parse(data);
@@ -147,6 +105,12 @@ app.post("/signup", (req, res) => {
         res.send(JSON.stringify(userData));
     });
 });
+app.get('/registeredStudents', (req, res) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        res.send(JSON.stringify(allData.students))
+    })
+})
 app.post("/studentRegistration", (req, res) => {
     fs.readFile("registration", "utf8", (err, data) => {
         const allData = JSON.parse(data);
@@ -161,6 +125,15 @@ app.post("/studentRegistration", (req, res) => {
         res.send(JSON.stringify(reqData));
     });
 });
+app.put('/studentRegistration/:id', (req, res) => {
+    fs.readFile("registration", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const studentInfoByID = allData.students.find(x => x.id == req.params.id);
+        studentInfoByID.name = req.body.name;
+        fs.writeFile("registration", JSON.stringify(allData), () => { })
+        res.send(JSON.stringify(studentInfoByID))
+    })
+})
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

@@ -30,17 +30,5 @@
             "password": "123456",
             "id": 5
         }
-    ],
-    "images": [
-        {
-            "name": "A Karim Munshi",
-            "image": "1.jpeg",
-            "id": 1
-        },
-        {
-            "name": "A Karim Munshi",
-            "image": "2.jpeg",
-            "id": 2
-        }
     ]
 }

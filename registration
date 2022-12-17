@@ -163,17 +163,17 @@
     ],
     "students": [
         {
-            "name": "Wasiur Rahman",
+            "name": "Ahmadullah Farhan",
             "image": "1.jpeg",
             "id": 1
         },
         {
-            "name": "wasi ibn Habib",
+            "name": "Wasiur Rahman",
             "image": "2.jpeg",
             "id": 2
         },
         {
-            "name": "Farhan",
+            "name": "Abdul Mazed",
             "image": "3.jpeg",
             "id": 3
         }
