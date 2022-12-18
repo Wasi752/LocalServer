@@ -217,6 +217,60 @@
             "brith": "",
             "nid": "",
             "id": 6
+        },
+        {
+            "name": "A Rahman",
+            "father": "",
+            "mother": "",
+            "present_address": "",
+            "permanent_ddress": "",
+            "academic_achievement": "",
+            "languages_skills": "",
+            "designation": "",
+            "contact_no": "",
+            "e_mail": "",
+            "room_no": "",
+            "image": "7.jpeg",
+            "nationality": "",
+            "brith": "",
+            "nid": "",
+            "id": 7
+        },
+        {
+            "name": "ali",
+            "password": "123456war",
+            "image": "8.jpeg",
+            "id": 8
+        },
+        {
+            "name": "wasiur Rahman",
+            "password": "12344ruy786",
+            "image": "9.jpeg",
+            "id": 9
+        },
+        {
+            "name": "Wasi",
+            "password": "1233456",
+            "image": "10.jpeg",
+            "id": 10
+        },
+        {
+            "name": "abcde",
+            "password": "1233456",
+            "image": "11.jpeg",
+            "id": 11
+        },
+        {
+            "name": "abcde",
+            "password": "1233456",
+            "image": "12.jpeg",
+            "id": 12
+        },
+        {
+            "name": "abceds",
+            "password": "1233456",
+            "image": "13.jpeg",
+            "id": 13
         }
     ]
 }
