@@ -125,7 +125,7 @@ app.post("/studentRegistration", (req, res) => {
         res.send(JSON.stringify(reqData));
     });
 });
-app.put('/studentRegistration/:id', (req, res) => {
+app.put('/registeredStudents/:id', (req, res) => {
     fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const studentInfoByID = allData.students.find(x => x.id == req.params.id);
