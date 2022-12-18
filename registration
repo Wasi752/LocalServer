@@ -194,6 +194,29 @@
             "brith": "10/2/1981",
             "nid": "",
             "id": 4
+        },
+        {
+            "name": "Ahmad Hasan",
+            "image": "5.jpeg",
+            "id": 5
+        },
+        {
+            "name": "Ali Hasan",
+            "father": "",
+            "mother": "",
+            "present_address": "",
+            "permanent_ddress": "",
+            "academic_achievement": "",
+            "languages_skills": "",
+            "designation": "",
+            "contact_no": "0191230897654",
+            "e_mail": "osiur2@gmail.com",
+            "room_no": "",
+            "image": "6.jpeg",
+            "nationality": "",
+            "brith": "",
+            "nid": "",
+            "id": 6
         }
     ]
 }
