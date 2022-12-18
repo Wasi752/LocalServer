@@ -65,6 +65,16 @@ app.post('/result', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
+app.put('/results/:id', (req, res) => {
+    fs.readFile("madrasaResult", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const resultInfoByID = allData.results.find(x => x.id == req.params.id);
+        resultInfoByID.mname = req.body.mname;
+        resultInfoByID.mcode = req.body.mcode;
+        fs.writeFile("madrasaResult", JSON.stringify(allData), () => { })
+        res.send(JSON.stringify(resultInfoByID))
+    })
+})
 app.get('/madrasas', (req, res) => {
     fs.readFile("registration", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
