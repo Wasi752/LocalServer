@@ -125,6 +125,12 @@ app.post("/studentRegistration", (req, res) => {
     fs.readFile("registration", "utf8", (err, data) => {
         const allData = JSON.parse(data);
         const reqData = req.body;
+        if (reqData.name.length < 5){
+            res.status(400).send(JSON.stringify({
+                error:"Name must be contain atleast 5 Characters"
+            }));
+            return;
+        }
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         reqData.id = allData.students.length + 1;
