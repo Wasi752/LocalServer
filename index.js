@@ -134,7 +134,7 @@ app.post("/studentRegistration", (req, res) => {
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         reqData.id = allData.students.length + 1;
-        fs.writeFile(`public/${reqData.id}.jpeg`, buffer, () => { });
+        fs.writeFile(`public/student/${reqData.id}.jpeg`, buffer, () => { });
         reqData.image = `${reqData.id}.jpeg`;
         allData.students.push(reqData);
         fs.writeFile("registration", JSON.stringify(allData), () => { });
