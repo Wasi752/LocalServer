@@ -49,6 +49,22 @@ app.post('/create-board', (req, res) => {
         res.send(`${req.body.name}`)
     })
 })
+app.get('/fazilatResult', (req, res) => {
+    fs.readFile("madrasaResult", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        res.send(JSON.stringify(allData.fazilatResult))
+    })
+})
+app.post('/fazilatResults', (req, res) => {
+    fs.readFile("madrasaResult", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const resultData = req.body;
+        resultData.id = allData.fazilatResult.length + 1;
+        allData.fazilatResult.push(resultData)
+        fs.writeFile('madrasaResult', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
 app.get('/results', (req, res) => {
     fs.readFile("madrasaResult", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
