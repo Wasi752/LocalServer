@@ -229,6 +229,23 @@
             "brith": "12/3/1967",
             "nid": "1234567890",
             "id": 4
+        },
+        {
+            "name": "Wasiur",
+            "name_arabic": "",
+            "name_english": "",
+            "father": "",
+            "village": "",
+            "postOffice": "",
+            "policeStation": "",
+            "district": "",
+            "stdType": "",
+            "contact_no": "",
+            "e_mail": "",
+            "image": "5.jpeg",
+            "brith": "2022-12-05",
+            "nid": "",
+            "id": 5
         }
     ]
 }

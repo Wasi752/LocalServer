@@ -293,6 +293,24 @@
             "brith": "04/08/1993",
             "nid": "7768580438",
             "id": 19
+        },
+        {
+            "name": "Abu Shamil",
+            "father": "Md Habib Ullah",
+            "mother": "Shamima Akter",
+            "present_address": "polsupur, Donia-1236, Kadamtali, Dakha.",
+            "permanent_ddress": "Jafrabad, Puran Bazar, Chandpur",
+            "academic_achievement": "Dawra-e-Hadis.",
+            "languages_skills": "Bangla, Arabic, English & Urdu",
+            "designation": "Office Secretary",
+            "contact_no": "01305656703",
+            "e_mail": "osiur2@gmail.com",
+            "room_no": "201",
+            "image": "20.jpeg",
+            "nationality": "Bangladeshi",
+            "brith": "10/2/1981",
+            "nid": "1987654324567",
+            "id": 20
         }
     ],
     "boards": [

@@ -25,14 +25,24 @@ app.get('/employees', (req, res) => {
 })
 app.post('/create-employee', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const employeeData = req.body;
-        employeeData.id = allData.employees.length + 1;
-        allData.employees.push(employeeData)
-        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
-        res.send(`${req.body.name}`)
-    })
-})
+        const allData = JSON.parse(data);
+        const reqData = req.body;
+        if (reqData.name.length < 5) {
+            res.status(400).send(JSON.stringify({
+                error: "Name must be contain atleast 5 Characters"
+            }));
+            return;
+        }
+        const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
+        const buffer = Buffer.from(rawImageString, "base64");
+        reqData.id = allData.employees.length + 1;
+        fs.writeFile(`public/staff/${reqData.id}.jpeg`, buffer, () => { });
+        reqData.image = `${reqData.id}.jpeg`;
+        allData.employees.push(reqData);
+        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { });
+        res.send(JSON.stringify(reqData));
+    });
+});
 app.get('/boards', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
@@ -141,9 +151,9 @@ app.post("/studentRegistration", (req, res) => {
     fs.readFile("registration", "utf8", (err, data) => {
         const allData = JSON.parse(data);
         const reqData = req.body;
-        if (reqData.name.length < 5){
+        if (reqData.name.length < 5) {
             res.status(400).send(JSON.stringify({
-                error:"Name must be contain atleast 5 Characters"
+                error: "Name must be contain atleast 5 Characters"
             }));
             return;
         }
