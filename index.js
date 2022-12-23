@@ -157,6 +157,45 @@ app.post("/studentRegistration", (req, res) => {
             }));
             return;
         }
+        const uppercaseRegExp = /(?=.*?[A-Z])/;
+        const lowercaseRegExp = /(?=.*?[a-z])/;
+        const digitsRegExp = /(?=.*?[0-9])/;
+        const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+        const minLengthRegExp = /.{8,}/;
+        const uppercasePassword = uppercaseRegExp.test(password);
+        const lowercasePassword = lowercaseRegExp.test(password);
+        const digitsPassword = digitsRegExp.test(password);
+        const specialCharPassword = specialCharRegExp.test(password);
+        const minLengthPassword = minLengthRegExp.test(password);
+
+        if (password.length === 0) {
+            res.status(400).send(JSON.stringify({
+                error: "Password is empty"
+            }));
+        } else if (!uppercasePassword) {
+            res.status(400).send(JSON.stringify({
+                error: "At least one Uppercase"
+            }));
+        } else if (!lowercasePassword) {
+            res.status(400).send(JSON.stringify({
+                error: "At least one Lowercase"
+            }));
+        } else if (!digitsPassword) {
+            res.status(400).send(JSON.stringify({
+                error: "At least one digit"
+            }));
+        } else if (!specialCharPassword) {
+            res.status(400).send(JSON.stringify({
+                error: "At least one Special Characters"
+            }));
+        } else if (!minLengthPassword) {
+            res.status(400).send(JSON.stringify({
+                error: "At least minumum 8 characters"
+            }));
+        } else {
+            res.status(200).send(JSON.stringify)
+            return;
+        };
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         reqData.id = allData.students.length + 1;
