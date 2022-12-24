@@ -6,6 +6,7 @@ const { parse } = require('path')
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const { json } = require('express')
+const { stringify } = require('querystring')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -135,6 +136,42 @@ app.post("/signup", (req, res) => {
     fs.readFile("database", "utf8", (err, data) => {
         const allData = JSON.parse(data);
         const userData = req.body;
+        const getError = () => {
+            const uppercaseRegExp = /(?=.*?[A-Z])/;
+            const lowercaseRegExp = /(?=.*?[a-z])/;
+            const digitsRegExp = /(?=.*?[0-9])/;
+            const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+            const minLengthRegExp = /.{8,}/;
+            const uppercasePassword = uppercaseRegExp.test(req.body.password);
+            const lowercasePassword = lowercaseRegExp.test(req.body.password);
+            const digitsPassword = digitsRegExp.test(req.body.password);
+            const specialCharPassword = specialCharRegExp.test(req.body.password);
+            const minLengthPassword = minLengthRegExp.test(req.body.password);
+            if (req.body.username.length < 5) {
+                return `Name must be contain atleast 5 Characters`;
+            } else if (req.body.password.length === 0) {
+                return "Password is empty";
+            } else if (!uppercasePassword) {
+                return "At least one Uppercase";
+            } else if (!lowercasePassword) {
+                return "At least one Lowercase";
+            } else if (!digitsPassword) {
+                return "At least one digit";
+            } else if (!specialCharPassword) {
+                return "At least one Special Characters";
+            } else if (!minLengthPassword) {
+                return "At least minumum 8 characters";
+            } else if (req.body.email.length < 10) {
+                return "E-mail is not valid";
+            }
+            return "";
+        }
+        const error = getError();
+        if (error !== "") {
+            return res.status(400).send(JSON.stringify({
+                error: error
+            }))
+        }
         userData.id = allData.users.length + 1;
         allData.users.push(userData);
         fs.writeFile("database", JSON.stringify(allData), () => { });
@@ -149,53 +186,8 @@ app.get('/registeredStudents', (req, res) => {
 })
 app.post("/studentRegistration", (req, res) => {
     fs.readFile("registration", "utf8", (err, data) => {
-        const allData = JSON.parse(data);
-        const reqData = req.body;
-        if (reqData.name.length < 5) {
-            res.status(400).send(JSON.stringify({
-                error: "Name must be contain atleast 5 Characters"
-            }));
-            return;
-        }
-        const uppercaseRegExp = /(?=.*?[A-Z])/;
-        const lowercaseRegExp = /(?=.*?[a-z])/;
-        const digitsRegExp = /(?=.*?[0-9])/;
-        const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
-        const minLengthRegExp = /.{8,}/;
-        const uppercasePassword = uppercaseRegExp.test(password);
-        const lowercasePassword = lowercaseRegExp.test(password);
-        const digitsPassword = digitsRegExp.test(password);
-        const specialCharPassword = specialCharRegExp.test(password);
-        const minLengthPassword = minLengthRegExp.test(password);
-
-        if (password.length === 0) {
-            res.status(400).send(JSON.stringify({
-                error: "Password is empty"
-            }));
-        } else if (!uppercasePassword) {
-            res.status(400).send(JSON.stringify({
-                error: "At least one Uppercase"
-            }));
-        } else if (!lowercasePassword) {
-            res.status(400).send(JSON.stringify({
-                error: "At least one Lowercase"
-            }));
-        } else if (!digitsPassword) {
-            res.status(400).send(JSON.stringify({
-                error: "At least one digit"
-            }));
-        } else if (!specialCharPassword) {
-            res.status(400).send(JSON.stringify({
-                error: "At least one Special Characters"
-            }));
-        } else if (!minLengthPassword) {
-            res.status(400).send(JSON.stringify({
-                error: "At least minumum 8 characters"
-            }));
-        } else {
-            res.status(200).send(JSON.stringify)
-            return;
-        };
+        const allData = JSON.parse(data)
+        const userData = req.body;
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         reqData.id = allData.students.length + 1;
