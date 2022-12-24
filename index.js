@@ -187,7 +187,43 @@ app.get('/registeredStudents', (req, res) => {
 app.post("/studentRegistration", (req, res) => {
     fs.readFile("registration", "utf8", (err, data) => {
         const allData = JSON.parse(data)
-        const userData = req.body;
+        const reqData = req.body;
+        const getError = () => {
+            const uppercaseRegExp = /(?=.*?[A-Z])/;
+            const lowercaseRegExp = /(?=.*?[a-z])/;
+            const digitsRegExp = /(?=.*?[0-9])/;
+            const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+            const minLengthRegExp = /.{8,}/;
+            const uppercasePassword = uppercaseRegExp.test(req.body.password);
+            const lowercasePassword = lowercaseRegExp.test(req.body.password);
+            const digitsPassword = digitsRegExp.test(req.body.password);
+            const specialCharPassword = specialCharRegExp.test(req.body.password);
+            const minLengthPassword = minLengthRegExp.test(req.body.password);
+            if (req.body.name.length < 5) {
+                return `Name must be contain atleast 5 Characters`;
+            } else if (req.body.password.length === 0) {
+                return "Password is empty";
+            } else if (!uppercasePassword) {
+                return "At least one Uppercase";
+            } else if (!lowercasePassword) {
+                return "At least one Lowercase";
+            } else if (!digitsPassword) {
+                return "At least one digit";
+            } else if (!specialCharPassword) {
+                return "At least one Special Characters";
+            } else if (!minLengthPassword) {
+                return "At least minumum 8 characters";
+            } else if (req.body.email.length < 10) {
+                return "E-mail is not valid";
+            }
+            return "";
+        }
+        const error = getError();
+        if (error !== "") {
+            return res.status(400).send(JSON.stringify({
+                error: error
+            }))
+        }
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         reqData.id = allData.students.length + 1;

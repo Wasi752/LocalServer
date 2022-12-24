@@ -246,6 +246,30 @@
             "brith": "2022-12-05",
             "nid": "",
             "id": 5
+        },
+        {
+            "name": "Abdur Rahman",
+            "email": "safrehy@gmail.com",
+            "password": "Ww4m6shl6ba@",
+            "confirmPassword": "",
+            "image": "6.jpeg",
+            "id": 6
+        },
+        {
+            "name": "Abdur Rahman",
+            "email": "safrehy@gmail.com",
+            "password": "Ww4m6shl6ba@",
+            "confirmPassword": "",
+            "image": "7.jpeg",
+            "id": 7
+        },
+        {
+            "name": "AlMahmud",
+            "email": "almahmud@gmail.com",
+            "password": "as3456F%$",
+            "confirmPassword": "",
+            "image": "8.jpeg",
+            "id": 8
         }
     ]
 }
