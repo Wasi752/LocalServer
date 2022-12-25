@@ -207,6 +207,8 @@ app.post("/studentRegistration", (req, res) => {
             const minLengthPassword = minLengthRegExp.test(req.body.password);
             const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             const validEmail = validEmailAddress.test(req.body.email);
+            const validMobileNumber = /^[0-9]*$/;
+            const validNumber = validMobileNumber.test(req.body.mobileNumber);
             if (req.body.name.length < 5) {
                 return `Name must be contain atleast 5 Characters`;
             } else if (req.body.password.length === 0) {
@@ -227,6 +229,10 @@ app.post("/studentRegistration", (req, res) => {
                 return "E-mail is not valid";
             } else if (!validEmail) {
                 return "Email Addre must be in valid formate with @ symbol";
+            } else if (req.body.mobileNumber < 11) {
+                return "Mobile number must be 11 digit with in valid formate";
+            }else if (!validNumber) {
+                return "Mobile Number not valid";
             }
             return "";
         }
