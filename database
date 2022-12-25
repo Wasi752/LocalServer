@@ -179,6 +179,41 @@
             "email": "muhib12@gmail.com",
             "password": "WrtyU34^@",
             "id": 30
+        },
+        {
+            "username": "Ali Husain",
+            "email": "alihusain@gmail.com",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "id": 31
+        },
+        {
+            "username": "Nur Alom",
+            "email": "1234567890",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "id": 32
+        },
+        {
+            "username": "Ali Nur",
+            "email": "alinur@gmail.com",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "id": 33
+        },
+        {
+            "username": "Amanullah",
+            "email": "amanullah@gmail.com",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "id": 34
+        },
+        {
+            "username": "Nannu Munshi",
+            "email": "nannu@gmail.com",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "id": 35
         }
     ]
 }

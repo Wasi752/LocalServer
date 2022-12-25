@@ -147,6 +147,8 @@ app.post("/signup", (req, res) => {
             const digitsPassword = digitsRegExp.test(req.body.password);
             const specialCharPassword = specialCharRegExp.test(req.body.password);
             const minLengthPassword = minLengthRegExp.test(req.body.password);
+            const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            const validEmail = validEmailAddress.test(req.body.email);
             if (req.body.username.length < 5) {
                 return `Name must be contain atleast 5 Characters`;
             } else if (req.body.password.length === 0) {
@@ -161,8 +163,12 @@ app.post("/signup", (req, res) => {
                 return "At least one Special Characters";
             } else if (!minLengthPassword) {
                 return "At least minumum 8 characters";
+            } else if (req.body.confirmPassword !== req.body.password){
+                return "Confirm password is not matched";
             } else if (req.body.email.length < 10) {
                 return "E-mail is not valid";
+            }  else if (!validEmail) {
+                return "Email Addre must be in valid formate with @ symbol";
             }
             return "";
         }
@@ -199,6 +205,8 @@ app.post("/studentRegistration", (req, res) => {
             const digitsPassword = digitsRegExp.test(req.body.password);
             const specialCharPassword = specialCharRegExp.test(req.body.password);
             const minLengthPassword = minLengthRegExp.test(req.body.password);
+            const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            const validEmail = validEmailAddress.test(req.body.email);
             if (req.body.name.length < 5) {
                 return `Name must be contain atleast 5 Characters`;
             } else if (req.body.password.length === 0) {
@@ -213,8 +221,12 @@ app.post("/studentRegistration", (req, res) => {
                 return "At least one Special Characters";
             } else if (!minLengthPassword) {
                 return "At least minumum 8 characters";
+            } else if (req.body.confirmPassword !== req.body.password){
+                return "Confirm password is not matched";
             } else if (req.body.email.length < 10) {
                 return "E-mail is not valid";
+            } else if (!validEmail) {
+                return "Email Addre must be in valid formate with @ symbol";
             }
             return "";
         }
