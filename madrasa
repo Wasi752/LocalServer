@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "name": "Muhsin",
+            "email": "muhsin@gmail.com",
+            "mobile": "01305656703",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "image": "C:\\fakepath\\mdosiurrahman.jpg",
+            "id": 1
+        },
+        {
+            "name": "Nurul Alom",
+            "email": "muhsin@gmail.com",
+            "mobile": "01305656703",
+            "password": "W4m6shl6ba@",
+            "confirmPassword": "W4m6shl6ba@",
+            "image": "C:\\fakepath\\mdosiurrahman.jpg",
+            "id": 2
+        }
+    ]
+}

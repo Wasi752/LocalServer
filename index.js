@@ -261,6 +261,22 @@ app.put('/registeredStudents/:id', (req, res) => {
         res.send(JSON.stringify(studentInfoByID))
     })
 })
+app.get('/users', (req, res) => {
+    fs.readFile("madrasa", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        res.send(JSON.stringify(allData.users))
+    })
+})
+app.post('/user', (req, res) => {
+    fs.readFile("madrasa", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const userData = req.body;
+        userData.id = allData.users.length + 1;
+        allData.users.push(userData)
+        fs.writeFile('madrasa', JSON.stringify(allData), () => { })
+        res.send(`${req.body.name}`)
+    })
+})
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
