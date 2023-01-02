@@ -267,7 +267,7 @@ app.get('/users', (req, res) => {
         res.send(JSON.stringify(allData.users))
     })
 })
-app.post('/user', (req, res) => {
+app.post('/users', (req, res) => {
     fs.readFile("madrasa", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const userData = req.body;
