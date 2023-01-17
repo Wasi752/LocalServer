@@ -16,19 +16,22 @@
             "image": "staff/najemsaheb.jpg"
         },
         {
-            "id": 2,
-            "name": "Mawlana Md Osiur Rahman",
-            "father": "MD Habib Ullah.",
+            "name": "Md Osiur Rahman",
+            "father": "Hafez Mawlana Md Habibullah",
             "mother": "Mrs Shamima Akter Parvin",
-            "present_address": "polsupur, Donia-1236, Kadamtali, Dakha.",
-            "permanent_ddress": "Jafrabad, Puran Bazar, Chandpur.",
-            "academic_achievement": "Dawra-e-Hadis.",
-            "languages_skills": "Bengali, Arabic, English & Urdu.",
+            "present_address": "3/34, Kichukkhan Nibush, Road-4, Polashpur, Dania, Kadamtali, Dhaka-1236 ",
+            "permanent_ddress": "East Jafrabad, Puran Bazar, Sadar, Chandpur",
+            "academic_achievement": "Hifzul Quraan, Dawra-e Hadis, B.A (hons), M.A (Arabic)",
+            "languages_skills": "Bangla, Arabic, English & Urdu",
             "designation": "Office Secretary",
-            "contact_no": "01305656703",
+            "contact_no": "01912304752",
             "e_mail": "osiur2@gmail.com",
             "room_no": "201",
-            "image": "staff/mdosiurrahman.jpg"
+            "image": "staff/mdosiurrahman.jpg",
+            "nationality": "Bangladeshi",
+            "brith": "10/2/1981",
+            "nid": "1942362532",
+            "id": 2
         },
         {
             "id": 3,
@@ -293,24 +296,6 @@
             "brith": "04/08/1993",
             "nid": "7768580438",
             "id": 19
-        },
-        {
-            "name": "Abu Shamil",
-            "father": "Md Habib Ullah",
-            "mother": "Shamima Akter",
-            "present_address": "polsupur, Donia-1236, Kadamtali, Dakha.",
-            "permanent_ddress": "Jafrabad, Puran Bazar, Chandpur",
-            "academic_achievement": "Dawra-e-Hadis.",
-            "languages_skills": "Bangla, Arabic, English & Urdu",
-            "designation": "Office Secretary",
-            "contact_no": "01305656703",
-            "e_mail": "osiur2@gmail.com",
-            "room_no": "201",
-            "image": "20.jpeg",
-            "nationality": "Bangladeshi",
-            "brith": "10/2/1981",
-            "nid": "1987654324567",
-            "id": 20
         },
         {
             "name": "Shamil irfan",

@@ -25,6 +25,14 @@ app.get('/employees', (req, res) => {
         res.send(JSON.stringify(allData.employees))
     })
 })
+app.delete('/employees/:id', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        allData.employees = allData.employees.filter(x => x.id != req.params.id);
+        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
+        res.status(204).send()
+    })
+})
 app.post('/create-employee', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data);
