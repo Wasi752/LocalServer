@@ -25,6 +25,37 @@ app.get('/employees', (req, res) => {
         res.send(JSON.stringify(allData.employees))
     })
 })
+app.get('/employees/:id', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+        res.send(JSON.stringify(allData.employeeInfoByID))
+    })
+})
+app.put('/employees/:id', (req, res) => {
+    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+        const allData = JSON.parse(data)
+        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+        employeeInfoByID.name = req.body.name;
+        employeeInfoByID.father = req.body.father;
+        employeeInfoByID.mother = req.body.mother;
+        employeeInfoByID.present_address = req.body.present_address;
+        employeeInfoByID.permanent_address = req.body.permanent_address;
+        employeeInfoByID.academic_achievement = req.body.academic_achievement;
+        employeeInfoByID.languages_skills = req.body.languages_skills;
+        employeeInfoByID.designation = req.body.designation;
+        employeeInfoByID.contact_no = req.body.contact_no;
+        employeeInfoByID.e_mail = req.body.e_mail;
+        employeeInfoByID.room_no = req.body.room_no;
+        employeeInfoByID.image = req.body.image;
+        employeeInfoByID.nationality = req.body.nationality;
+        employeeInfoByID.brith = req.body.brith;
+        employeeInfoByID.nid = req.body.nid;
+        employeeInfoByID.id = req.body.id;
+        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
+        res.send(JSON.stringify(employeeInfoByID))
+    })
+})
 app.delete('/employees/:id', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
@@ -33,7 +64,7 @@ app.delete('/employees/:id', (req, res) => {
         res.status(204).send()
     })
 })
-app.post('/create-employee', (req, res) => {
+app.post('/employees', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data);
         const reqData = req.body;
