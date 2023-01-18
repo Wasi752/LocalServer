@@ -29,7 +29,7 @@ app.get('/employees/:id', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
-        res.send(JSON.stringify(allData.employeeInfoByID))
+        res.send(JSON.stringify(employeeInfoByID))
     })
 })
 app.put('/employees/:id', (req, res) => {
