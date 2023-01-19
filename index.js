@@ -35,7 +35,7 @@ app.get('/employees/:id', (req, res) => {
 app.put('/employees/:id', (req, res) => {
     fs.readFile("employeeDatabase", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
-        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+        const employeeInfoByID = allData.employees.filter(x => x.id == req.params.id)[0];
         employeeInfoByID.name = req.body.name;
         employeeInfoByID.father = req.body.father;
         employeeInfoByID.mother = req.body.mother;
