@@ -19,53 +19,60 @@ app.use(cors({
 app.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
+
 app.get('/employees', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        res.send(JSON.stringify(allData.employees))
-    })
+    modify2(allData => {
+        return allData.employees;
+    }, res)
 })
+const modify2 = (callBack, res) => fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
+    const allData = JSON.parse(data)
+    const result = callBack(allData)
+    res.send(JSON.stringify(result))
+});
+
 app.get('/employees/:id', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    modify2((allData) => {
+        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+        return employeeInfoByID;
+    }, res)
+})
+
+app.put('/employees/:id', (req, res) => {
+    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
-        res.send(JSON.stringify(employeeInfoByID))
-    })
-})
-app.put('/employees/:id', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const employeeInfoByID = allData.employees.filter(x => x.id == req.params.id)[0];
-        employeeInfoByID.name = req.body.name;
-        employeeInfoByID.father = req.body.father;
-        employeeInfoByID.mother = req.body.mother;
-        employeeInfoByID.present_address = req.body.present_address;
-        employeeInfoByID.permanent_address = req.body.permanent_address;
-        employeeInfoByID.academic_achievement = req.body.academic_achievement;
-        employeeInfoByID.languages_skills = req.body.languages_skills;
-        employeeInfoByID.designation = req.body.designation;
-        employeeInfoByID.contact_no = req.body.contact_no;
-        employeeInfoByID.e_mail = req.body.e_mail;
-        employeeInfoByID.room_no = req.body.room_no;
-        employeeInfoByID.image = req.body.image;
-        employeeInfoByID.nationality = req.body.nationality;
-        employeeInfoByID.brith = req.body.brith;
-        employeeInfoByID.nid = req.body.nid;
-        employeeInfoByID.id = req.body.id;
-        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
+        const modify = (prop) => employeeInfoByID[prop] = req.body[prop];
+        modify('name');
+        modify('father');
+        modify('mother');
+        modify('present_address');
+        modify('permanent_address');
+        modify('academic_achievement');
+        modify('languages_skills');
+        modify('designation');
+        modify('contact_no');
+        modify('e_mail');
+        modify('room_no');
+        modify('image');
+        modify('nationality');
+        modify('brith');
+        modify('nid');
+        modify('id');
+        fs.writeFile("employeeDatabase.json", JSON.stringify(allData), () => { })
         res.send(JSON.stringify(employeeInfoByID))
     })
 })
 app.delete('/employees/:id', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         allData.employees = allData.employees.filter(x => x.id != req.params.id);
-        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { })
+        fs.writeFile("employeeDatabase.json", JSON.stringify(allData), () => { })
         res.status(204).send()
     })
 })
 app.post('/employees', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data);
         const reqData = req.body;
         if (reqData.name.length < 5) {
@@ -80,23 +87,23 @@ app.post('/employees', (req, res) => {
         fs.writeFile(`public/staff/${reqData.id}.jpeg`, buffer, () => { });
         reqData.image = `${reqData.id}.jpeg`;
         allData.employees.push(reqData);
-        fs.writeFile("employeeDatabase", JSON.stringify(allData), () => { });
+        fs.writeFile("employeeDatabase.json", JSON.stringify(allData), () => { });
         res.send(JSON.stringify(reqData));
     });
 });
 app.get('/boards', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         res.send(JSON.stringify(allData.boards))
     })
 })
 app.post('/create-board', (req, res) => {
-    fs.readFile("employeeDatabase", 'utf8', (err, data) => {
+    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const boardData = req.body;
         boardData.id = allData.boards.length + 1;
         allData.boards.push(boardData)
-        fs.writeFile('employeeDatabase', JSON.stringify(allData), () => { })
+        fs.writeFile('employeeDatabase.json', JSON.stringify(allData), () => { })
         res.send(`${req.body.name}`)
     })
 })
