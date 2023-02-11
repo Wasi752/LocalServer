@@ -25,22 +25,22 @@ const modify2 = (dbName, callBack, res) => fs.readFile(dbName, 'utf8', (err, dat
     res.send(result)
 });
 app.get('/employees', (req, res) => {
-    modify2("employeeDatabase.json", allData => {
+    modify2("employeeDatabase.json", (allData) => {
         return allData.employees;
     }, res)
 })
 app.get('/employees/:id', (req, res) => {
-    modify2("employeeDatabase.json",(allData) => {
+    modify2("employeeDatabase.json", (allData) => {
         const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
         return employeeInfoByID;
     }, res)
 })
 
 app.put('/employees/:id', (req, res) => {
-    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
+    modify2('employeeDatabase.json', (alldata) => {
         const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
         const modify = (prop) => employeeInfoByID[prop] = req.body[prop];
+        const modificationList = []
         modify('name');
         modify('father');
         modify('mother');
@@ -57,11 +57,12 @@ app.put('/employees/:id', (req, res) => {
         modify('brith');
         modify('nid');
         modify('id');
-        writeFile("employeeDatabase.json", allData)
-        res.send(JSON.stringify(employeeInfoByID))
-    })
+        writeFile("employeeDatabase.json", allData);
+        return employeeInfoByID;
+    }, res)
 })
-const writeFile = (dbName, data)=> fs.writeFile(dbName, JSON.stringify(data), () => { })
+const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { })
+
 app.delete('/employees/:id', (req, res) => {
     fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
@@ -156,7 +157,7 @@ app.post('/madrasa', (req, res) => {
         const madrasaData = req.body;
         madrasaData.id = allData.madrasas.length + 1;
         allData.madrasas.push(madrasaData)
-        fs.writeFile('registration', JSON.stringify(allData), () => { })
+        writeFile('registration', allData)
         res.send(`${req.body.name}`)
     })
 })
