@@ -40,23 +40,25 @@ app.put('/employees/:id', (req, res) => {
     modify2('employeeDatabase.json', (alldata) => {
         const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
         const modify = (prop) => employeeInfoByID[prop] = req.body[prop];
-        const modificationList = []
-        modify('name');
-        modify('father');
-        modify('mother');
-        modify('present_address');
-        modify('permanent_address');
-        modify('academic_achievement');
-        modify('languages_skills');
-        modify('designation');
-        modify('contact_no');
-        modify('e_mail');
-        modify('room_no');
-        modify('image');
-        modify('nationality');
-        modify('brith');
-        modify('nid');
-        modify('id');
+        const modificationList = [
+        'name',
+        'father',
+        'mother',
+        'present_address',
+        'permanent_address',
+        'academic_achievement',
+        'languages_skills',
+        'designation',
+        'contact_no',
+        'e_mail',
+        'room_no',
+        'image',
+        'nationality',
+        'brith',
+        'nid',
+        'id'
+    ];
+    modificationList.forEach(modify)
         writeFile("employeeDatabase.json", allData);
         return employeeInfoByID;
     }, res)
