@@ -25,20 +25,20 @@ const modify2 = (dbName, callBack, res) => fs.readFile(dbName, 'utf8', (err, dat
     res.send(result)
 });
 app.get('/employees', (req, res) => {
-    modify2("employeeDatabase.json", (allData) => {
-        return allData.employees;
+    modify2("employeeDatabase.json", (dataall) => {
+        return dataall.employees;
     }, res)
 })
 app.get('/employees/:id', (req, res) => {
-    modify2("employeeDatabase.json", (allData) => {
-        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+    modify2("employeeDatabase.json", (all) => {
+        const employeeInfoByID = all.employees.find(x => x.id == req.params.id);
         return employeeInfoByID;
     }, res)
 })
 
 app.put('/employees/:id', (req, res) => {
-    modify2('employeeDatabase.json', (alldata) => {
-        const employeeInfoByID = allData.employees.find(x => x.id == req.params.id);
+    modify2('employeeDatabase.json', (datas) => {
+        const employeeInfoByID = datas.employees.find(x => x.id == req.params.id);
         const modificationList = [
             'name',
             'father',
@@ -58,19 +58,18 @@ app.put('/employees/:id', (req, res) => {
             'id'
         ];
         modificationList.forEach((prop) => employeeInfoByID[prop] = req.body[prop])
-        writeFile("employeeDatabase.json", allData);
+        writeFile("employeeDatabase.json", datas);
         return employeeInfoByID;
     }, res)
 })
 const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { })
 
 app.delete('/employees/:id', (req, res) => {
-    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        allData.employees = allData.employees.filter(x => x.id != req.params.id);
-        writeFile("employeeDatabase.json", allData)
+    modify2("employeeDatabase.json", (datall) => {
+        datall.employees = datall.employees.filter(x => x.id != req.params.id);
+        writeFile("employeeDatabase.json", datall)
         res.status(204).send()
-    })
+    }, res)
 })
 app.post('/employees', (req, res) => {
     fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
