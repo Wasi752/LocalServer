@@ -244,10 +244,10 @@
             "image": "staff/masum.jpg"
         },
         {
-            "name": "Md Wahidur Rahman",
+            "name": "Md Osiur Rahman",
             "father": "Hafez Mawlana Md Habibullah",
             "mother": "Mrs Shamima Akter Parvin",
-            "present_address": "3/34, Kichukkhan Nibush, Road-4, Polashpur, Dania, KadamtaliDhaka-1236 ",
+            "present_address": "3/34, Kichukkhan Nibush, Road-4, Polashpur, Dania, Kadamtali, Dhaka-1236 ",
             "permanent_address": "East Jafrabad, Puran Bazar, Sadar, Chandpur",
             "academic_achievement": "Hifzul Quraan, Dawra-e Hadis, B.A (hons), M.A (Arabic)",
             "languages_skills": "Bangla, Arabic, English & Urdu",
@@ -296,6 +296,24 @@
             "brith": "04/08/1993",
             "nid": "7768580438",
             "id": 19
+        },
+        {
+            "name": "Md Wahidur Rahman",
+            "father": "Hafez Mawlana Md Habibullah",
+            "mother": "Mrs Shamima Akter Parvin",
+            "present_address": "Jonata Housing Jame Masjid, Mirpur-1, Dhaka-1236 ",
+            "permanent_address": "East Jafrabad, Puran Bazar, Sadar, Chandpur",
+            "academic_achievement": "Hifzul Quraan, Dawra-e Hadis, Ifta",
+            "languages_skills": "Bangla, Arabic, English & Urdu",
+            "designation": "Khatib & Muhaddis",
+            "contact_no": "01912304752",
+            "e_mail": "osiur2@gmail.com",
+            "room_no": "201",
+            "image": "21.jpeg",
+            "nationality": "Bangladeshi",
+            "brith": "10/2/1981",
+            "nid": "1942362532",
+            "id": 20
         }
     ],
     "boards": [

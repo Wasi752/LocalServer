@@ -68,12 +68,10 @@ app.delete('/employees/:id', (req, res) => {
     modify2("employeeDatabase.json", (datall) => {
         datall.employees = datall.employees.filter(x => x.id != req.params.id);
         writeFile("employeeDatabase.json", datall)
-        res.status(204).send()
     }, res)
 })
 app.post('/employees', (req, res) => {
-    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
-        const allData = JSON.parse(data);
+    modify2("employeeDatabase.json", (data) => {
         const reqData = req.body;
         if (reqData.name.length < 5) {
             res.status(400).send(JSON.stringify({
@@ -83,28 +81,30 @@ app.post('/employees', (req, res) => {
         }
         const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
-        reqData.id = allData.employees.length + 1;
+        reqData.id = data.employees.length + 1;
         fs.writeFile(`public/staff/${reqData.id}.jpeg`, buffer, () => { });
         reqData.image = `${reqData.id}.jpeg`;
-        allData.employees.push(reqData);
-        writeFile("employeeDatabase.json", allData)
-        res.send(JSON.stringify(reqData));
-    });
+        data.employees.push(reqData);
+        writeFile("employeeDatabase.json", data)
+        return reqData;
+    }, res);
 });
 app.get('/boards', (req, res) => {
     modify2("employeeDatabase.json", allData => {
         return allData.boards;
     }, res)
 })
-app.post('/create-board', (req, res) => {
-    fs.readFile("employeeDatabase.json", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
+const postModify = (rurl, dbName, allData) => app.post(rurl, (req, res) => {
+    modify2(dbName, (allData) => {
         const boardData = req.body;
         boardData.id = allData.boards.length + 1;
         allData.boards.push(boardData)
         writeFile("employeeDatabase.json", allData)
-        res.send(`${req.body.name}`)
-    })
+    }, res)
+})
+
+postModify('/create-board', 'employeeDatabase.json', (allData) => {
+    return allData.boards;
 })
 app.get('/fazilatResult', (req, res) => {
     modify2("madrasaResult", allData => {
