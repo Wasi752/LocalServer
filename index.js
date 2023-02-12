@@ -24,6 +24,22 @@ const modify2 = (dbName, callBack, res) => fs.readFile(dbName, 'utf8', (err, dat
     const result = callBack(allData)
     res.send(result)
 });
+const postModify = (rurl, dbName, prop, allData) => app.post(rurl, (req, res) => {
+    modify2(dbName, (allData) => {
+        const boardData = req.body;
+        boardData.id = allData[prop].length + 1;
+        allData[prop].push(boardData)
+        writeFile(dbName, allData)
+    }, res)
+})
+const deleteModify = (rurl, dbname, prop, allData) => app.delete(rurl, (req, res) => {
+    modify2(dbname, (allData) => {
+        allData[prop] = allData[prop].filter(x => x.id != req.params.id);
+        writeFile(dbname, allData)
+    }, res)
+})
+const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { })
+
 app.get('/employees', (req, res) => {
     modify2("employeeDatabase.json", (dataall) => {
         return dataall.employees;
@@ -35,41 +51,61 @@ app.get('/employees/:id', (req, res) => {
         return employeeInfoByID;
     }, res)
 })
-
-app.put('/employees/:id', (req, res) => {
-    modify2('employeeDatabase.json', (datas) => {
-        const employeeInfoByID = datas.employees.find(x => x.id == req.params.id);
-        const modificationList = [
-            'name',
-            'father',
-            'mother',
-            'present_address',
-            'permanent_address',
-            'academic_achievement',
-            'languages_skills',
-            'designation',
-            'contact_no',
-            'e_mail',
-            'room_no',
-            'image',
-            'nationality',
-            'brith',
-            'nid',
-            'id'
-        ];
-        modificationList.forEach((prop) => employeeInfoByID[prop] = req.body[prop])
-        writeFile("employeeDatabase.json", datas);
-        return employeeInfoByID;
+const putModify = (rurl, dbName, prop, arr, allData) => app.put(rurl, (req, res) => {
+    modify2(dbName, (allData) => {
+        const dataByID = allData[prop].filter(x => x.id == req.params.id)[0];
+        arr.forEach((prop) => dataByID[prop] = req.body[prop]);
+        writeFile(dbName, allData);
     }, res)
 })
-const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { })
-
-app.delete('/employees/:id', (req, res) => {
-    modify2("employeeDatabase.json", (datall) => {
-        datall.employees = datall.employees.filter(x => x.id != req.params.id);
-        writeFile("employeeDatabase.json", datall)
-    }, res)
+putModify('/employees/:id', 'employeeDatabase.json', 'employees', employeeProp = [
+    'name',
+    'father',
+    'mother',
+    'present_address',
+    'permanent_address',
+    'academic_achievement',
+    'languages_skills',
+    'designation',
+    'contact_no',
+    'e_mail',
+    'room_no',
+    'image',
+    'nationality',
+    'brith',
+    'nid',
+    'id'
+], (allData) => {
+    return allData.employees;
 })
+// app.put('/employees/:id', (req, res) => {
+//     modify2('employeeDatabase.json', (datas) => {
+//         const employeeInfoByID = datas.employees.find(x => x.id == req.params.id);
+//         const modificationList = [
+//             'name',
+//             'father',
+//             'mother',
+//             'present_address',
+//             'permanent_address',
+//             'academic_achievement',
+//             'languages_skills',
+//             'designation',
+//             'contact_no',
+//             'e_mail',
+//             'room_no',
+//             'image',
+//             'nationality',
+//             'brith',
+//             'nid',
+//             'id'
+//         ];
+//         modificationList.forEach((prop) => employeeInfoByID[prop] = req.body[prop])
+//         writeFile("employeeDatabase.json", datas);
+//         return employeeInfoByID;
+//     }, res)
+// })
+deleteModify('/employees/:id', 'employeeDatabase.json', 'employees', (allData) => { });
+
 app.post('/employees', (req, res) => {
     modify2("employeeDatabase.json", (data) => {
         const reqData = req.body;
@@ -94,14 +130,6 @@ app.get('/boards', (req, res) => {
         return allData.boards;
     }, res)
 })
-const postModify = (rurl, dbName, prop, allData) => app.post(rurl, (req, res) => {
-    modify2(dbName, (allData) => {
-        const boardData = req.body;
-        boardData.id = allData[prop].length + 1;
-        allData[prop].push(boardData)
-        writeFile(dbName, allData)
-    }, res)
-})
 //--------------
 postModify('/create-board', 'employeeDatabase.json', 'boards', (allData) => {
     return allData.boards;
@@ -115,8 +143,9 @@ app.get('/fazilatResult', (req, res) => {
 postModify('/fazilatResults', 'madrasaResult.json', 'fazilatResult', (allData) => {
     return allData.fazilatResult;
 })
+deleteModify('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult', (allData) => { });
 // -----------------
-app.get('/results', (req, res) => {
+app.get('/result', (req, res) => {
     modify2("madrasaResult.json", allData => {
         return allData.results;
     }, res)
@@ -124,7 +153,7 @@ app.get('/results', (req, res) => {
 postModify('/result', 'madrasaResult.json', 'results', (allData) => {
     return allData.results;
 })
-app.put('/results/:id', (req, res) => {
+app.put('/result/:id', (req, res) => {
     fs.readFile("madrasaResult.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const resultInfoByID = allData.results.find(x => x.id == req.params.id);
@@ -134,15 +163,17 @@ app.put('/results/:id', (req, res) => {
         res.send(JSON.stringify(resultInfoByID))
     })
 })
+deleteModify('/result/:id', 'madrasaResult.json', 'results', (allData) => { })
 //------------------
 app.get('/madrasas', (req, res) => {
     modify2("registration.json", allData => {
         return allData.madrasas;
     }, res)
 })
-postModify('/madrasa', 'registration.json', 'madrasas', (allData)=> {
+postModify('/madrasa', 'registration.json', 'madrasas', (allData) => {
     return allData.madrasas;
 })
+deleteModify('/madrasa/:id', 'registration.json', 'madrasas', (allData) => { })
 //-----------------
 app.post("/signin", (req, res) => {
     fs.readFile("database", "utf8", (err, data) => {
@@ -287,6 +318,8 @@ app.put('/registeredStudents/:id', (req, res) => {
         res.send(JSON.stringify(studentInfoByID))
     })
 })
+deleteModify('/registeredStudents/:id', 'registration', 'students', (allData) => { });
+//----------------
 app.get('/users', (req, res) => {
     modify2("madrasa", allData => {
         return allData.users;
