@@ -99,7 +99,7 @@ const postModify = (rurl, dbName, allData) => app.post(rurl, (req, res) => {
         const boardData = req.body;
         boardData.id = allData.boards.length + 1;
         allData.boards.push(boardData)
-        writeFile("employeeDatabase.json", allData)
+        writeFile(dbName, allData)
     }, res)
 })
 
