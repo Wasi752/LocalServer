@@ -94,73 +94,56 @@ app.get('/boards', (req, res) => {
         return allData.boards;
     }, res)
 })
-const postModify = (rurl, dbName, allData) => app.post(rurl, (req, res) => {
+const postModify = (rurl, dbName, prop, allData) => app.post(rurl, (req, res) => {
     modify2(dbName, (allData) => {
         const boardData = req.body;
-        boardData.id = allData.boards.length + 1;
-        allData.boards.push(boardData)
+        boardData.id = allData[prop].length + 1;
+        allData[prop].push(boardData)
         writeFile(dbName, allData)
     }, res)
 })
-
-postModify('/create-board', 'employeeDatabase.json', (allData) => {
+//--------------
+postModify('/create-board', 'employeeDatabase.json', 'boards', (allData) => {
     return allData.boards;
 })
+//--------------
 app.get('/fazilatResult', (req, res) => {
-    modify2("madrasaResult", allData => {
+    modify2("madrasaResult.json", allData => {
         return allData.fazilatResult;
     }, res)
 })
-app.post('/fazilatResults', (req, res) => {
-    fs.readFile("madrasaResult", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const resultData = req.body;
-        resultData.id = allData.fazilatResult.length + 1;
-        allData.fazilatResult.push(resultData)
-        writeFile('madrasaResult', allData)
-        res.send(`${req.body.name}`)
-    })
+postModify('/fazilatResults', 'madrasaResult.json', 'fazilatResult', (allData) => {
+    return allData.fazilatResult;
 })
+// -----------------
 app.get('/results', (req, res) => {
-    modify2("madrasaResult", allData => {
+    modify2("madrasaResult.json", allData => {
         return allData.results;
     }, res)
 })
-app.post('/result', (req, res) => {
-    fs.readFile("madrasaResult", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const resultData = req.body;
-        resultData.id = allData.results.length + 1;
-        allData.results.push(resultData)
-        writeFile('madrasaResult', allData)
-        res.send(`${req.body.name}`)
-    })
+postModify('/result', 'madrasaResult.json', 'results', (allData) => {
+    return allData.results;
 })
 app.put('/results/:id', (req, res) => {
-    fs.readFile("madrasaResult", 'utf8', (err, data) => {
+    fs.readFile("madrasaResult.json", 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const resultInfoByID = allData.results.find(x => x.id == req.params.id);
         resultInfoByID.mname = req.body.mname;
         resultInfoByID.mcode = req.body.mcode;
-        writeFile('madrasaResult', allData)
+        writeFile('madrasaResult.json', allData)
         res.send(JSON.stringify(resultInfoByID))
     })
 })
+//------------------
 app.get('/madrasas', (req, res) => {
-    modify2("registration", allData => {
+    modify2("registration.json", allData => {
         return allData.madrasas;
     }, res)
 })
-app.post('/madrasa', (req, res) => {
-    fs.readFile("registration", 'utf8', (err, data) => {
-        const allData = JSON.parse(data)
-        const madrasaData = req.body;
-        madrasaData.id = allData.madrasas.length + 1;
-        allData.madrasas.push(madrasaData)
-        writeFile('registration', allData)
-        res.send(`${req.body.name}`)
-    })
+postModify('/madrasa', 'registration.json', 'madrasas', (allData)=> {
+    return allData.madrasas;
 })
+//-----------------
 app.post("/signin", (req, res) => {
     fs.readFile("database", "utf8", (err, data) => {
         const allData = JSON.parse(data);
@@ -227,6 +210,7 @@ app.post("/signup", (req, res) => {
         res.send(JSON.stringify(userData));
     });
 });
+//----------------
 app.get('/registeredStudents', (req, res) => {
     modify2("registration", allData => {
         return allData.students;

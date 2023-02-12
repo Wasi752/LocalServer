@@ -159,6 +159,22 @@
             "jela": "ঢাকা",
             "division": "ঢাকা",
             "id": 10
+        },
+        {
+            "name_arabic": "جامعة اسلامیة اسلام باغ",
+            "name_bangala": "জামিয়া ইসলামিয়া ইসলামবাগ",
+            "name_english": "Jamia Islamia Islambug",
+            "address": "৫৫ ইসলামবাগ, লালবাগ, ঢাকা",
+            "e_mail": "islambugm@gmail.com",
+            "phone": "01713-004439",
+            "muhtamim": "Mawlana Abdullah",
+            "nazim": "Mawlana Abdur Rahman",
+            "code_no": "00007",
+            "ilhaq_no": "1/145",
+            "board": "Wifaqul Madarisil Arabia Bangladesh",
+            "jela": "ঢাকা",
+            "division": "ঢাকা",
+            "id": 11
         }
     ],
     "students": [
