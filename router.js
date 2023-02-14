@@ -1,26 +1,18 @@
 const fs = require("fs")
 const { body, check, validationResult } = require('express-validator');
 const routes = (app) => {
-   const { modify2, postModify, putModify, deleteModify, writeFile } = require('./utility')(app)
+    const { modify2, POST, PUT, DELETE, GET, GETID, writeFile } = require('./utility')(app)
     //const utility = require('./utility');
-    //const { modify2, postModify, putModify, deleteModify, writeFile } = utility(app)
+    //const { modify2, GET, GETID, POST, PUT, DELETE, writeFile } = utility(app)
+    
     app.get('/', (req, res) => {
         res.send('Bismillahir Rahmanir Rahim')
     })
 
     //---------------
-    app.get('/employees', (req, res) => {
-        modify2("employeeDatabase.json", (dataall) => {
-            return dataall.employees;
-        }, res)
-    })
-    app.get('/employees/:id', (req, res) => {
-        modify2("employeeDatabase.json", (all) => {
-            const employeeInfoByID = all.employees.find(x => x.id == req.params.id);
-            return employeeInfoByID;
-        }, res)
-    })
-    putModify('/employees/:id', 'employeeDatabase.json', 'employees', [
+    GET('/employees', 'employeeDatabase.json');
+    GETID('/employees/:id', 'employeeDatabase.json', 'employees');
+    PUT('/employees/:id', 'employeeDatabase.json', 'employees', [
         'name',
         'father',
         'mother',
@@ -37,7 +29,7 @@ const routes = (app) => {
         'brith',
         'nid'
     ])
-    deleteModify('/employees/:id', 'employeeDatabase.json', 'employees');
+    DELETE('/employees/:id', 'employeeDatabase.json', 'employees');
 
     app.post('/employees', (req, res) => {
         modify2("employeeDatabase.json", (data) => {
@@ -58,53 +50,29 @@ const routes = (app) => {
             return reqData;
         }, res);
     });
-    app.get('/boards', (req, res) => {
-        modify2("employeeDatabase.json", allData => {
-            return allData.boards;
-        }, res)
-    })
+    GET('/boards', 'employeeDatabase.json');
+    GETID('/boards/:id', 'employeeDatabase.json', 'boards');
+    POST('/boards', 'employeeDatabase.json', 'boards')
+    PUT('/boards/:id', 'employeeDatabase.json', 'boards', ['name_arabic', 'name_bangala', 'name_english', 'address']);
+    DELETE('/boards/:id', 'employeeDatabase.json', 'boards')
     //--------------
-    postModify('/create-board', 'employeeDatabase.json', 'boards')
-    //--------------
-    app.get('/fazilatResult', (req, res) => {
-        modify2("madrasaResult.json", allData => {
-            return allData.fazilatResult;
-        }, res)
-    })
-    postModify('/fazilatResults', 'madrasaResult.json', 'fazilatResult', (allData) => {
-        return allData.fazilatResult;
-    })
-    deleteModify('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult', (allData) => { });
+    GET('/fazilatResult', 'madrasaResult.json');
+    GETID('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
+    POST('/fazilatResults', 'madrasaResult.json', 'fazilatResult');
+    PUT('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult', ['madrasa', 'name', 'fname']);
+    DELETE('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
     // -----------------
-    app.get('/result', (req, res) => {
-        modify2("madrasaResult.json", allData => {
-            return allData.results;
-        }, res)
-    })
-    postModify('/result', 'madrasaResult.json', 'results', (allData) => {
-        return allData.results;
-    })
-    app.put('/result/:id', (req, res) => {
-        fs.readFile("madrasaResult.json", 'utf8', (err, data) => {
-            const allData = JSON.parse(data)
-            const resultInfoByID = allData.results.find(x => x.id == req.params.id);
-            resultInfoByID.mname = req.body.mname;
-            resultInfoByID.mcode = req.body.mcode;
-            writeFile('madrasaResult.json', allData)
-            res.send(JSON.stringify(resultInfoByID))
-        })
-    })
-    deleteModify('/result/:id', 'madrasaResult.json', 'results', (allData) => { })
+    GET('/result', 'madrasaResult.json');
+    GETID('/result/:id', 'madrasaResult.json', 'results');
+    POST('/result', 'madrasaResult.json', 'results');
+    PUT('/result/:id', 'madrasaResult.json', 'results', ['mname', 'name']);
+    DELETE('/result/:id', 'madrasaResult.json', 'results');
     //------------------
-    app.get('/madrasas', (req, res) => {
-        modify2("registration.json", allData => {
-            return allData.madrasas;
-        }, res)
-    })
-    postModify('/madrasa', 'registration.json', 'madrasas', (allData) => {
-        return allData.madrasas;
-    })
-    deleteModify('/madrasa/:id', 'registration.json', 'madrasas', (allData) => { })
+    GET('/madrasa', 'registration.json');
+    GETID('/madrasa/:id', 'registration.json', 'madrasas');
+    POST('/madrasa', 'registration.json', 'madrasas');
+    PUT('/madrasa/:id', 'registration.json', 'madrasas', ['name_arabic', 'name_bangala', 'name_english', 'muhtamim']);
+    DELETE('/madrasa/:id', 'registration.json', 'madrasas');
     //-----------------
     app.post("/signin", (req, res) => {
         fs.readFile("database", "utf8", (err, data) => {
@@ -173,11 +141,7 @@ const routes = (app) => {
         });
     });
     //----------------
-    app.get('/registeredStudents', (req, res) => {
-        modify2("registration", allData => {
-            return allData.students;
-        }, res)
-    })
+    GET('/registeredStudents', 'registration');
     app.post("/studentRegistration", (req, res) => {
         fs.readFile("registration", "utf8", (err, data) => {
             const allData = JSON.parse(data)
@@ -240,22 +204,10 @@ const routes = (app) => {
             res.send(JSON.stringify(reqData));
         });
     });
-    app.put('/registeredStudents/:id', (req, res) => {
-        fs.readFile("registration", 'utf8', (err, data) => {
-            const allData = JSON.parse(data)
-            const studentInfoByID = allData.students.find(x => x.id == req.params.id);
-            studentInfoByID.name = req.body.name;
-            writeFile('registration', allData)
-            res.send(JSON.stringify(studentInfoByID))
-        })
-    })
-    deleteModify('/registeredStudents/:id', 'registration', 'students', (allData) => { });
+    PUT('/registeredStudents/:id', 'registration', 'students', []);
+    DELETE('/registeredStudents/:id', 'registration', 'students');
     //----------------
-    app.get('/users', (req, res) => {
-        modify2("madrasa", allData => {
-            return allData.users;
-        }, res)
-    })
+    GET('/users', 'madrasa');
     app.post('/users',
         check('email')
             .isEmail()
