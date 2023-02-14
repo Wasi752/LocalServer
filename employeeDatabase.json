@@ -6,14 +6,17 @@
             "father": "Adam (a)",
             "mother": "Hawwa (a)",
             "present_address": "Kamrangir Char, Dakha.",
-            "permanent_address": "Barishal.",
-            "academic_achievement": "Dawra-e-Hadis.",
+            "permanent_address": "Nobinagar, Mehidigang, Barishal.",
+            "academic_achievement": "Hifzul Quraan, Dawra-e-Hadis, ",
             "languages_skills": "Bengali, Arabic, English & Urdu.",
             "designation": "Najim_e_Emtihan",
             "contact_no": "01913500453",
             "e_mail": "haiatululya@gmail.com",
             "room_no": "301",
-            "image": "staff/najemsaheb.jpg"
+            "image": "staff/najemsaheb.jpg",
+            "nationality": "Bangladeshi",
+            "brith": "23/10/1957",
+            "nid": "897654321786"
         },
         {
             "name": "Md Osiur Rahman",

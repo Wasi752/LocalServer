@@ -1,16 +1,17 @@
 const fs = require("fs")
 const { body, check, validationResult } = require('express-validator');
+
 const routes = (app) => {
-    const { modify2, POST, PUT, DELETE, GET, GETID, writeFile } = require('./utility')(app)
+    const { modify, POST, PUT, DELETE, GET, GETID, writeFile } = require('./utility')(app)
     //const utility = require('./utility');
-    //const { modify2, GET, GETID, POST, PUT, DELETE, writeFile } = utility(app)
+    //const { modify, GET, GETID, POST, PUT, DELETE, writeFile } = utility(app)
     
     app.get('/', (req, res) => {
         res.send('Bismillahir Rahmanir Rahim')
     })
 
     //---------------
-    GET('/employees', 'employeeDatabase.json');
+    GET('/employees', 'employeeDatabase.json', 'employees');
     GETID('/employees/:id', 'employeeDatabase.json', 'employees');
     PUT('/employees/:id', 'employeeDatabase.json', 'employees', [
         'name',
@@ -32,7 +33,7 @@ const routes = (app) => {
     DELETE('/employees/:id', 'employeeDatabase.json', 'employees');
 
     app.post('/employees', (req, res) => {
-        modify2("employeeDatabase.json", (data) => {
+        modify("employeeDatabase.json", (data) => {
             const reqData = req.body;
             if (reqData.name.length < 5) {
                 res.status(400).send(JSON.stringify({
@@ -50,25 +51,25 @@ const routes = (app) => {
             return reqData;
         }, res);
     });
-    GET('/boards', 'employeeDatabase.json');
+    GET('/boards', 'employeeDatabase.json', 'boards');
     GETID('/boards/:id', 'employeeDatabase.json', 'boards');
     POST('/boards', 'employeeDatabase.json', 'boards')
     PUT('/boards/:id', 'employeeDatabase.json', 'boards', ['name_arabic', 'name_bangala', 'name_english', 'address']);
     DELETE('/boards/:id', 'employeeDatabase.json', 'boards')
     //--------------
-    GET('/fazilatResult', 'madrasaResult.json');
+    GET('/fazilatResult', 'madrasaResult.json', 'fazilatResult');
     GETID('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
     POST('/fazilatResults', 'madrasaResult.json', 'fazilatResult');
     PUT('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult', ['madrasa', 'name', 'fname']);
     DELETE('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
     // -----------------
-    GET('/result', 'madrasaResult.json');
+    GET('/result', 'madrasaResult.json', 'results');
     GETID('/result/:id', 'madrasaResult.json', 'results');
     POST('/result', 'madrasaResult.json', 'results');
     PUT('/result/:id', 'madrasaResult.json', 'results', ['mname', 'name']);
     DELETE('/result/:id', 'madrasaResult.json', 'results');
     //------------------
-    GET('/madrasa', 'registration.json');
+    GET('/madrasa', 'registration.json', 'madrasas');
     GETID('/madrasa/:id', 'registration.json', 'madrasas');
     POST('/madrasa', 'registration.json', 'madrasas');
     PUT('/madrasa/:id', 'registration.json', 'madrasas', ['name_arabic', 'name_bangala', 'name_english', 'muhtamim']);
@@ -141,7 +142,7 @@ const routes = (app) => {
         });
     });
     //----------------
-    GET('/registeredStudents', 'registration');
+    GET('/registeredStudents', 'registration', 'students');
     app.post("/studentRegistration", (req, res) => {
         fs.readFile("registration", "utf8", (err, data) => {
             const allData = JSON.parse(data)
@@ -207,7 +208,7 @@ const routes = (app) => {
     PUT('/registeredStudents/:id', 'registration', 'students', []);
     DELETE('/registeredStudents/:id', 'registration', 'students');
     //----------------
-    GET('/users', 'madrasa');
+    GET('/users', 'madrasa', 'users');
     app.post('/users',
         check('email')
             .isEmail()
