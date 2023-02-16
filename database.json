@@ -214,6 +214,13 @@
             "password": "W4m6shl6ba@",
             "confirmPassword": "W4m6shl6ba@",
             "id": 35
+        },
+        {
+            "username": "Amatullah Tasnim",
+            "email": "osiur2@gmail.com",
+            "password": "W4m6shl6b$",
+            "confirmPassword": "W4m6shl6b$",
+            "id": 36
         }
     ]
 }

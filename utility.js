@@ -42,7 +42,7 @@ const utility = (app) => {
         }, res)
     })
     const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { });
-    // --------------
+    // ============== --------------- ==============
     const POSTSIGNIN = (rurl, dbName, prop) => app.post(rurl, (req, res) => {
         fs.readFile(dbName, "utf8", (err, data) => {
             const allData = JSON.parse(data);
@@ -57,8 +57,8 @@ const utility = (app) => {
             }
         });
     });
-    app.post("/signup", (req, res) => {
-        fs.readFile("database", "utf8", (err, data) => {
+    const SIGNUP = (rurl, dbName, prop) => app.post(rurl, (req, res) => {
+        fs.readFile(dbName, "utf8", (err, data) => {
             const allData = JSON.parse(data);
             const userData = req.body;
             const getError = () => {
@@ -103,12 +103,64 @@ const utility = (app) => {
                     error: error
                 }))
             }
-            userData.id = allData.users.length + 1;
-            allData.users.push(userData);
-            fs.writeFile("database", JSON.stringify(allData), () => { });
-            res.send(JSON.stringify(userData));
+            userData.id = allData[prop].length + 1;
+            allData[prop].push(userData);
+            writeFile(dbName, allData);
+            res.send(userData);
         });
     });
-    return { writeFile, modify, GET, GETID, POST, PUT, DELETE, POSTSIGNIN }
+    const STUDENTREG = (rurl, dbName, prop) => app.post(rurl, (req, res) => {
+        fs.readFile(dbName, "utf8", (err, data) => {
+            const allData = JSON.parse(data)
+            const reqData = req.body;
+            const getError = () => {
+                const uppercaseRegExp = /(?=.*?[A-Z])/;
+                const lowercaseRegExp = /(?=.*?[a-z])/;
+                const digitsRegExp = /(?=.*?[0-9])/;
+                const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+                const minLengthRegExp = /.{8,}/;
+                const uppercasePassword = uppercaseRegExp.test(req.body.password);
+                const lowercasePassword = lowercaseRegExp.test(req.body.password);
+                const digitsPassword = digitsRegExp.test(req.body.password);
+                const specialCharPassword = specialCharRegExp.test(req.body.password);
+                const minLengthPassword = minLengthRegExp.test(req.body.password);
+                const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                const validEmail = validEmailAddress.test(req.body.email);
+                const validMobileNumber = /^[0-9]*$/;
+                const validNumber = validMobileNumber.test(req.body.mobileNumber);
+                if (req.body.name.length < 5) {
+                    return `Name must be contain atleast 5 Characters`;
+                }
+                const ELSEIF = (a, barta) => {else if (a) { return barta }};
+                ELSEIF(req.body.password.length === 0, 'Password is empty');
+                ELSEIF(!uppercasePassword, 'At least one Uppercase');
+                ELSEIF(!lowercasePassword, 'At least one Lowercase');
+                ELSEIF(!digitsPassword, 'At least one digit');
+                ELSEIF(!specialCharPassword, 'At least one Special Characters');
+                ELSEIF(!minLengthPassword, 'At least minumum 8 characters');
+                ELSEIF(req.body.confirmPassword !== req.body.password, 'Confirm password is not matched');
+                ELSEIF(req.body.email.length < 10, 'E-mail is not valid');
+        ELSEIF(!validEmail, 'Email Addre must be in valid formate with @ symbol')
+        ELSEIF(req.body.mobileNumber < 11, 'Mobile number must be 11 digit with in valid formate');
+        (!validNumber, 'Mobile Number not valid');
+        return "";
+    }
+            const error = getError();
+    if (error !== "") {
+        return res.status(400).send(JSON.stringify({
+            error: error
+        }))
+    }
+    const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
+    const buffer = Buffer.from(rawImageString, "base64");
+    reqData.id = allData.students.length + 1;
+    fs.writeFile(`public/student/${reqData.id}.jpeg`, buffer, () => { });
+    reqData.image = `${reqData.id}.jpeg`;
+    allData.students.push(reqData);
+    writeFile('registration', allData)
+    res.send(JSON.stringify(reqData));
+});
+    });
+return { writeFile, modify, GET, GETID, POST, PUT, DELETE, POSTSIGNIN, SIGNUP }
 }
 module.exports = utility;
