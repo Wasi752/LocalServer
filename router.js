@@ -13,6 +13,7 @@ const routes = (app) => {
     //---------------
     GET('/employees', 'employeeDatabase.json', 'employees');
     GETID('/employees/:id', 'employeeDatabase.json', 'employees');
+    POST('/employees', 'employeeDatabase.json', 'employees')
     PUT('/employees/:id', 'employeeDatabase.json', 'employees', [
         'name',
         'father',
@@ -32,25 +33,7 @@ const routes = (app) => {
     ])
     DELETE('/employees/:id', 'employeeDatabase.json', 'employees');
 
-    app.post('/employees', (req, res) => {
-        modify("employeeDatabase.json", (data) => {
-            const reqData = req.body;
-            if (reqData.name.length < 5) {
-                res.status(400).send(JSON.stringify({
-                    error: "Name must be contain atleast 5 Characters"
-                }));
-                return;
-            }
-            const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
-            const buffer = Buffer.from(rawImageString, "base64");
-            reqData.id = data.employees.length + 1;
-            fs.writeFile(`public/staff/${reqData.id}.jpeg`, buffer, () => { });
-            reqData.image = `${reqData.id}.jpeg`;
-            data.employees.push(reqData);
-            writeFile("employeeDatabase.json", data)
-            return reqData;
-        }, res);
-    });
+    // ---------------------
     GET('/boards', 'employeeDatabase.json', 'boards');
     GETID('/boards/:id', 'employeeDatabase.json', 'boards');
     POST('/boards', 'employeeDatabase.json', 'boards')
