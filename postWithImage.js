@@ -18,7 +18,9 @@ const POSTWithImage = (rurl, dbName, prop ) => app.post(rurl, (req, res) => {
         return reqData;
     }, res);
 });
-const POST = (rurl, dbName, prop, arr) => app.post(rurl, (req, res) => {
+const writeFile = (dbName, data, folderName) => fs.writeFile(dbName, JSON.stringify(data), () => { });
+
+const POSTEMPLOYEE = (rurl, dbName, prop, arr) => app.post(rurl, (req, res) => {
     modify(dbName, (allData) => {
         const postData = req.body;
         if (postData[arr].length < 5) {
@@ -27,10 +29,10 @@ const POST = (rurl, dbName, prop, arr) => app.post(rurl, (req, res) => {
             }));
             return;
         }
-        const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
+        const rawImageString = postData.image.replace(/^data:image\/jpeg;base64,/, "");
         const buffer = Buffer.from(rawImageString, "base64");
         postData.id = allData[prop].length + 1;
-        fs.writeFile(`public/staff/${postData.id}.jpeg`, buffer, () => { });
+        writeFile('', '', `${folderName}${postData.id}.jpeg`, buffer, () => { });
         postData.image = `${postData.id}.jpeg`;
         allData[prop].push(postData)
         writeFile(dbName, allData)
