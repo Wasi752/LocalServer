@@ -2,9 +2,9 @@ const fs = require("fs")
 const { body, check, validationResult } = require('express-validator');
 
 const routes = (app) => {
-    const { modify, POST, PUT, DELETE, GET, GETID, writeFile, POSTSIGNIN, SIGNUP } = require('./utility')(app)
-    //const utility = require('./utility');
-    //const { modify, GET, GETID, POST, PUT, DELETE, writeFile } = utility(app)
+    const { modify, POST, PUT, DELETE, GET, GETID, writeFile, POSTSIGNIN, SIGNUP, STUDENTREG, POSTUSER } = require('./allFunction')(app)
+    //const allFunctions = require('./allFunction');
+    //const { modify, GET, GETID, POST, PUT, DELETE, writeFile } = allFunctions(app)
     
     app.get('/', (req, res) => {
         res.send('Bismillahir Rahmanir Rahim')
@@ -62,43 +62,14 @@ const routes = (app) => {
     SIGNUP('/signup', 'database.json', 'users');
     
     //----------------
-    GET('/registeredStudents', 'registration', 'students');
-    
-    PUT('/registeredStudents/:id', 'registration', 'students', []);
-    DELETE('/registeredStudents/:id', 'registration', 'students');
+    GET('/studentRegistration', 'registration.json', 'students');
+    STUDENTREG('/studentRegistration', 'registration.json', 'students', 'length')
+    PUT('/studentRegistration/:id', 'registration.json', 'students', ['name', 'name_arabic', 'name_english', 'father', 'brith']);
+    DELETE('/studentRegistration/:id', 'registration', 'students');
     //----------------
-    GET('/users', 'madrasa', 'users');
-    app.post('/users',
-        check('email')
-            .isEmail()
-            .withMessage('must be a valid email address'),
-        check('password')
-            .isLength({ min: 5 })
-            .withMessage('must be at least 5 chars long')
-            .matches(/\d/)
-            .withMessage('must contain a number'),
-        check('confirmPassword')
-            .custom((value, { req }) => value === req.body.password)
-            .withMessage('must match password'),
-        check('name')
-            .isLength({ min: 5 })
-            .withMessage('must be at least 5 chars long'),
-        check('mobile')
-            .isLength({ min: 11, max: 11 })
-            .withMessage('must be exactly 11 digits long'),
-        (req, res) => {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
-            fs.readFile("madrasa", 'utf8', (err, data) => {
-                const allData = JSON.parse(data)
-                const userData = req.body;
-                userData.id = allData.users.length + 1;
-                allData.users.push(userData)
-                writeFile('madrasa', allData)
-                res.send(`${req.body.name}`)
-            })
-        })
+    GET('/users', 'madrasa.json', 'users');
+    POSTUSER('/users', 'madrasa.json', 'users');
+    PUT('/users/:id', 'madrasa.json', 'users', ['name', 'password', 'mobile']);
+    DELETE('/users/:id', 'madrasa.json', 'users');
 }
 module.exports = routes;

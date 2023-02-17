@@ -179,7 +179,7 @@
     ],
     "students": [
         {
-            "name": "Wasiur Rahman",
+            "name": "Md Osiur Rahman",
             "name_arabic": "محمد وصي الرحمن",
             "name_english": "Md Osiur Rahman",
             "father": "Md Habib Ullah",
@@ -385,6 +385,40 @@
             "confirmPassword": "W4m6shl6ba@",
             "image": "20.jpeg",
             "id": 20
+        },
+        {
+            "name": "Wasiur Rahman",
+            "name_arabic": "محمد وصي الرحمن",
+            "name_english": "Md Osiur Rahman",
+            "father": "Md Habib Ullah",
+            "village": "Jafrabad",
+            "postOffice": "Puran Bazar",
+            "policeStation": "Sadar",
+            "district": "Chandpur",
+            "stdType": "Reguler",
+            "contact_no": "01305656703",
+            "e_mail": "osiur2@gmail.com",
+            "image": "21.jpeg",
+            "brith": "10/02/1981",
+            "nid": "12365478695645",
+            "id": 21
+        },
+        {
+            "name": "Osiur Rahman",
+            "name_arabic": "محمد وصي الرحمن",
+            "name_english": "Osiur Rahman",
+            "father": "HM Habibullah",
+            "village": "Jafrabad",
+            "postOffice": "Puran Bazar",
+            "policeStation": "Chandpur",
+            "district": "Chandpur",
+            "stdType": "Reguler",
+            "contact_no": "01305656703",
+            "e_mail": "osiur2@gmail.com",
+            "image": "22.jpeg",
+            "brith": "1981-02-10",
+            "nid": "234567898765",
+            "id": 22
         }
     ]
 }

@@ -3,7 +3,7 @@ const app = express()
 const port = 3001
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const rou = require("./router")
+const router = require("./router")
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -12,8 +12,8 @@ app.use(cors({
     credentials: true, // <= Accept credentials (cookies) sent by the client
 }));
 
-rou(app)
+router(app)
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`App Listening on port ${port}`)
 })

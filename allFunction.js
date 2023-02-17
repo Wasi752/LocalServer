@@ -1,6 +1,7 @@
 const fs = require("fs")
+const { body, check, validationResult } = require('express-validator');
 
-const utility = (app) => {
+const allFunctions = (app) => {
     const modify = (dbName, callBack, res) => fs.readFile(dbName, 'utf8', (err, data) => {
         const allData = JSON.parse(data)
         const result = callBack(allData)
@@ -57,6 +58,11 @@ const utility = (app) => {
             }
         });
     });
+    const IFELSE = (a, barta, b, barta2) => {
+        if (a) {
+            return barta;
+        } else if (b) { return barta2; }
+    };
     const SIGNUP = (rurl, dbName, prop) => app.post(rurl, (req, res) => {
         fs.readFile(dbName, "utf8", (err, data) => {
             const allData = JSON.parse(data);
@@ -74,27 +80,16 @@ const utility = (app) => {
                 const minLengthPassword = minLengthRegExp.test(req.body.password);
                 const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                 const validEmail = validEmailAddress.test(req.body.email);
-                if (req.body.username.length < 5) {
-                    return `Name must be contain atleast 5 Characters`;
-                } else if (req.body.password.length === 0) {
-                    return "Password is empty";
-                } else if (!uppercasePassword) {
-                    return "At least one Uppercase";
-                } else if (!lowercasePassword) {
-                    return "At least one Lowercase";
-                } else if (!digitsPassword) {
-                    return "At least one digit";
-                } else if (!specialCharPassword) {
-                    return "At least one Special Characters";
-                } else if (!minLengthPassword) {
-                    return "At least minumum 8 characters";
-                } else if (req.body.confirmPassword !== req.body.password) {
-                    return "Confirm password is not matched";
-                } else if (req.body.email.length < 10) {
-                    return "E-mail is not valid";
-                } else if (!validEmail) {
-                    return "Email Addre must be in valid formate with @ symbol";
-                }
+                IFELSE(`${req.body.username}.length < 5`, 'Name must be contain atleast 5 Characters');
+                IFELSE('', '', `${req.body.password}.length === 0`, 'Password is empty');
+                IFELSE('', '', !uppercasePassword, 'At least one Uppercase');
+                IFELSE('', '', !lowercasePassword, 'At least one Lowercase');
+                IFELSE('', '', !digitsPassword, 'At least one digit');
+                IFELSE('', '', !specialCharPassword, 'At least one Special Characters');
+                IFELSE('', '', !minLengthPassword, 'At least minumum 8 characters');
+                IFELSE('', '', req.body.confirmPassword !== req.body.password, 'Confirm password is not matched');
+                IFELSE('', '', req.body.email.length < 10, 'E-mail is not valid');
+                IFELSE('', '', !validEmail, 'Email Addre must be in valid formate with @ symbol');
                 return "";
             }
             const error = getError();
@@ -109,7 +104,7 @@ const utility = (app) => {
             res.send(userData);
         });
     });
-    const STUDENTREG = (rurl, dbName, prop) => app.post(rurl, (req, res) => {
+    const STUDENTREG = (rurl, dbName, prop, prop2) => app.post(rurl, (req, res) => {
         fs.readFile(dbName, "utf8", (err, data) => {
             const allData = JSON.parse(data)
             const reqData = req.body;
@@ -128,39 +123,59 @@ const utility = (app) => {
                 const validEmail = validEmailAddress.test(req.body.email);
                 const validMobileNumber = /^[0-9]*$/;
                 const validNumber = validMobileNumber.test(req.body.mobileNumber);
-                if (req.body.name.length < 5) {
-                    return `Name must be contain atleast 5 Characters`;
-                }
-                const ELSEIF = (a, barta) => {else if (a) { return barta }};
-                ELSEIF(req.body.password.length === 0, 'Password is empty');
-                ELSEIF(!uppercasePassword, 'At least one Uppercase');
-                ELSEIF(!lowercasePassword, 'At least one Lowercase');
-                ELSEIF(!digitsPassword, 'At least one digit');
-                ELSEIF(!specialCharPassword, 'At least one Special Characters');
-                ELSEIF(!minLengthPassword, 'At least minumum 8 characters');
-                ELSEIF(req.body.confirmPassword !== req.body.password, 'Confirm password is not matched');
-                ELSEIF(req.body.email.length < 10, 'E-mail is not valid');
-        ELSEIF(!validEmail, 'Email Addre must be in valid formate with @ symbol')
-        ELSEIF(req.body.mobileNumber < 11, 'Mobile number must be 11 digit with in valid formate');
-        (!validNumber, 'Mobile Number not valid');
-        return "";
-    }
+                IFELSE(req.body.name[prop2] < 5, 'Name must be contain atleast 5 Characters')
+                IFELSE('', '', `${req.body.password}.length === 0`, 'Password is empty');
+                IFELSE('', '', !uppercasePassword, 'At least one Uppercase');
+                IFELSE('', '', !lowercasePassword, 'At least one Lowercase');
+                IFELSE('', '', !digitsPassword, 'At least one digit');
+                IFELSE('', '', !specialCharPassword, 'At least one Special Characters');
+                IFELSE('', '', !minLengthPassword, 'At least minumum 8 characters');
+                IFELSE('', '', req.body.confirmPassword !== req.body.password, 'Confirm password is not matched');
+                IFELSE('', '', `${req.body.email}.length < 10`, 'E-mail is not valid');
+                IFELSE('', '', !validEmail, 'Email Addre must be in valid formate with @ symbol')
+                IFELSE('', '', req.body.mobileNumber < 11, 'Mobile number must be 11 digit with in valid formate');
+                IFELSE('', '', !validNumber, 'Mobile Number not valid');
+                return "";
+            }
             const error = getError();
-    if (error !== "") {
-        return res.status(400).send(JSON.stringify({
-            error: error
-        }))
-    }
-    const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
-    const buffer = Buffer.from(rawImageString, "base64");
-    reqData.id = allData.students.length + 1;
-    fs.writeFile(`public/student/${reqData.id}.jpeg`, buffer, () => { });
-    reqData.image = `${reqData.id}.jpeg`;
-    allData.students.push(reqData);
-    writeFile('registration', allData)
-    res.send(JSON.stringify(reqData));
-});
+            if (error !== "") {
+                return res.status(400).send(JSON.stringify({
+                    error: error
+                }))
+            }
+            const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
+            const buffer = Buffer.from(rawImageString, "base64");
+            reqData.id = allData[prop].length + 1;
+            fs.writeFile(`public/student/${reqData.id}.jpeg`, buffer, () => { });
+            reqData.image = `${reqData.id}.jpeg`;
+            allData[prop].push(reqData);
+            writeFile(dbName, allData)
+            res.send(JSON.stringify(reqData));
+        });
     });
-return { writeFile, modify, GET, GETID, POST, PUT, DELETE, POSTSIGNIN, SIGNUP }
+    const CHECK = (a, prop, prop2, prop3, prop4) => check(a)`${prop}${prop2}${prop3}${prop4}`;
+
+    const POSTUSER = (rurl, dbName, prop) =>
+        app.post(rurl,
+            CHECK('name', isLength({min: 5}), withMessage("must be at least 5 chars long")),
+            CHECK('email', '.isEmail()', '.ithMessage("must be a valid email address")'),
+            CHECK('password', '.isLength({min: 5})', '.withMessage("must be at least 5 chars long")', 'matches(/\d/)', '.withMessage("must contain a number")'),
+            CHECK('confirmPassword', '.custom((value, { req }) => value === req.body.password)', '.withMessage("must match password")'),
+            CHECK('mobile', '.isLength({min: 11, max : 11})', '.withMessage("must be exactly 11 digits long")'),
+            (req, res) => { 
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json({ errors: errors.array() });
+                }
+                fs.readFile(dbName, 'utf8', (err, data) => {
+                    const allData = JSON.parse(data)
+                    const userData = req.body;
+                    userData.id = allData[prop].length + 1;
+                    allData[prop].push(userData)
+                    writeFile(dbName, allData)
+                    res.send(req.body.name)
+                })
+            })
+    return { writeFile, modify, GET, GETID, POST, PUT, DELETE, POSTSIGNIN, SIGNUP, STUDENTREG, POSTUSER, CHECK, IFELSE }
 }
-module.exports = utility;
+module.exports = allFunctions;
