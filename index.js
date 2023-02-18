@@ -4,6 +4,7 @@ const port = 3001
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const router = require("./router")
+const auth = require('./auth')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -13,6 +14,8 @@ app.use(cors({
 }));
 
 app.use(router);
+app.use(auth);
+
 app.listen(port, () => {
     console.log(`App Listening on port ${port}`)
 })

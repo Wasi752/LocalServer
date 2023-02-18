@@ -1,18 +1,21 @@
 const fs = require("fs")
-const { body, check, validationResult } = require('express-validator');
 const router = require('express').Router();
 
-const { modify, POST, PUT, DELETE, GET, GETID, writeFile, POSTSIGNIN, SIGNUP, STUDENTREG, POSTUSER } = require('./allFunction')(router)
+const { POST, PUT, DELETE, GET, GETID, writeFile } = require('./allFunction')(router)
 
 router.get('/', (req, res) => {
     res.send('Bismillahir Rahmanir Rahim')
 })
+const createCRUD = (baseRoute, dbName, tableName, properties) => {
+    GET(baseRoute, dbName, tableName);
+    GETID(baseRoute + '/:id', dbName, tableName);
+    POST(baseRoute, dbName, tableName, properties);
+    PUT(baseRoute + '/:id', dbName, tableName, properties);
+    DELETE(baseRoute + '/:id', dbName, tableName)
+}
 
 //---------------
-GET('/employees', 'employeeDatabase.json', 'employees');
-GETID('/employees/:id', 'employeeDatabase.json', 'employees');
-POST('/employees', 'employeeDatabase.json', 'employees')
-PUT('/employees/:id', 'employeeDatabase.json', 'employees', [
+createCRUD('/employees', 'employeeDatabase.json', 'employees', [
     'name',
     'father',
     'mother',
@@ -28,46 +31,62 @@ PUT('/employees/:id', 'employeeDatabase.json', 'employees', [
     'nationality',
     'brith',
     'nid'
-])
-DELETE('/employees/:id', 'employeeDatabase.json', 'employees');
+]);
+createCRUD('/boards', 'employeeDatabase.json', 'boards', ['name_arabic', 'name_bangala', 'name_english', 'address']);
+createCRUD('/fazilatResult', 'madrasaResult.json', 'fazilatResult', ['madrasa', 'name', 'fname']);
+createCRUD('/result', 'madrasaResult.json', 'results', ['mname', 'name']);
+createCRUD('/madrasa', 'registration.json', 'madrasas', ['name_arabic', 'name_bangala', 'name_english', 'muhtamim']);
+createCRUD('/studentRegistration', 'registration.json', 'students', ['name', 'name_arabic', 'name_english', 'father', 'brith'])
+createCRUD('/users', 'madrasa.json', 'users', ['name', 'password', 'mobile']);
+// ======== ---------------------------- ===========
 
-// ---------------------
-GET('/boards', 'employeeDatabase.json', 'boards');
-GETID('/boards/:id', 'employeeDatabase.json', 'boards');
-POST('/boards', 'employeeDatabase.json', 'boards')
-PUT('/boards/:id', 'employeeDatabase.json', 'boards', ['name_arabic', 'name_bangala', 'name_english', 'address']);
-DELETE('/boards/:id', 'employeeDatabase.json', 'boards')
-//--------------
-GET('/fazilatResult', 'madrasaResult.json', 'fazilatResult');
-GETID('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
-POST('/fazilatResults', 'madrasaResult.json', 'fazilatResult');
-PUT('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult', ['madrasa', 'name', 'fname']);
-DELETE('/fazilatResults/:id', 'madrasaResult.json', 'fazilatResult');
-// -----------------
-GET('/result', 'madrasaResult.json', 'results');
-GETID('/result/:id', 'madrasaResult.json', 'results');
-POST('/result', 'madrasaResult.json', 'results');
-PUT('/result/:id', 'madrasaResult.json', 'results', ['mname', 'name']);
-DELETE('/result/:id', 'madrasaResult.json', 'results');
-//------------------
-GET('/madrasa', 'registration.json', 'madrasas');
-GETID('/madrasa/:id', 'registration.json', 'madrasas');
-POST('/madrasa', 'registration.json', 'madrasas');
-PUT('/madrasa/:id', 'registration.json', 'madrasas', ['name_arabic', 'name_bangala', 'name_english', 'muhtamim']);
-DELETE('/madrasa/:id', 'registration.json', 'madrasas');
-//-----------------
-POSTSIGNIN('/signin', 'database.json', 'users');
-SIGNUP('/signup', 'database.json', 'users');
-
-//----------------
-GET('/studentRegistration', 'registration.json', 'students');
-STUDENTREG('/studentRegistration', 'registration.json', 'students', 'length')
-PUT('/studentRegistration/:id', 'registration.json', 'students', ['name', 'name_arabic', 'name_english', 'father', 'brith']);
-DELETE('/studentRegistration/:id', 'registration', 'students');
-//----------------
-GET('/users', 'madrasa.json', 'users');
-POSTUSER('/users', 'madrasa.json', 'users');
-PUT('/users/:id', 'madrasa.json', 'users', ['name', 'password', 'mobile']);
-DELETE('/users/:id', 'madrasa.json', 'users');
-
+router.post('/studentRegistration', (req, res) => {
+    fs.readFile('registration.json', "utf8", (err, data) => {
+        const allData = JSON.parse(data)
+        const reqData = req.body;
+        const getError = () => {
+            const uppercaseRegExp = /(?=.*?[A-Z])/;
+            const lowercaseRegExp = /(?=.*?[a-z])/;
+            const digitsRegExp = /(?=.*?[0-9])/;
+            const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+            const minLengthRegExp = /.{8,}/;
+            const uppercasePassword = uppercaseRegExp.test(req.body.password);
+            const lowercasePassword = lowercaseRegExp.test(req.body.password);
+            const digitsPassword = digitsRegExp.test(req.body.password);
+            const specialCharPassword = specialCharRegExp.test(req.body.password);
+            const minLengthPassword = minLengthRegExp.test(req.body.password);
+            const validEmailAddress = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            const validEmail = validEmailAddress.test(req.body.email);
+            const validMobileNumber = /^[0-9]*$/;
+            const validNumber = validMobileNumber.test(req.body.mobileNumber);
+            IFELSE(req.body.name.length < 5, 'Name must be contain atleast 5 Characters')
+            IFELSE('', '', `${req.body.password}.length === 0`, 'Password is empty');
+            IFELSE('', '', !uppercasePassword, 'At least one Uppercase');
+            IFELSE('', '', !lowercasePassword, 'At least one Lowercase');
+            IFELSE('', '', !digitsPassword, 'At least one digit');
+            IFELSE('', '', !specialCharPassword, 'At least one Special Characters');
+            IFELSE('', '', !minLengthPassword, 'At least minumum 8 characters');
+            IFELSE('', '', req.body.confirmPassword !== req.body.password, 'Confirm password is not matched');
+            IFELSE('', '', `${req.body.email}.length < 10`, 'E-mail is not valid');
+            IFELSE('', '', !validEmail, 'Email Addre must be in valid formate with @ symbol')
+            IFELSE('', '', req.body.mobileNumber < 11, 'Mobile number must be 11 digit with in valid formate');
+            IFELSE('', '', !validNumber, 'Mobile Number not valid');
+            return "";
+        }
+        const error = getError();
+        if (error !== "") {
+            return res.status(400).send(JSON.stringify({
+                error: error
+            }))
+        }
+        const rawImageString = reqData.image.replace(/^data:image\/jpeg;base64,/, "");
+        const buffer = Buffer.from(rawImageString, "base64");
+        reqData.id = allData.students.length + 1;
+        fs.writeFile(`public/student/${reqData.id}.jpeg`, buffer, () => { });
+        reqData.image = `${reqData.id}.jpeg`;
+        allData.students.push(reqData);
+        writeFile('registration.json', allData)
+        res.send(JSON.stringify(reqData));
+    });
+});
 module.exports = router;
