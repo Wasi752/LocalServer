@@ -153,16 +153,18 @@ const allFunctions = (app) => {
             res.send(JSON.stringify(reqData));
         });
     });
-    const CHECK = (a, prop, prop2, prop3, prop4) => check(a)`${prop}${prop2}${prop3}${prop4}`;
+    const CHECK = (a, miN, maX, barta) => check(a).isLength({ miN, maX }).withMessage(barta);
+    const CHECK2 = (a, miN, maX, barta, barta2) => check(a).isLength({ miN, maX }).withMessage(barta).matches(/\d/).withMessage(barta2);
+    const CHECK3 = (a, barta) => check(a).custom((value, { req }) => value === req.body.password).withMessage(barta);
 
     const POSTUSER = (rurl, dbName, prop) =>
         app.post(rurl,
-            CHECK('name', isLength({min: 5}), withMessage("must be at least 5 chars long")),
-            CHECK('email', '.isEmail()', '.ithMessage("must be a valid email address")'),
-            CHECK('password', '.isLength({min: 5})', '.withMessage("must be at least 5 chars long")', 'matches(/\d/)', '.withMessage("must contain a number")'),
-            CHECK('confirmPassword', '.custom((value, { req }) => value === req.body.password)', '.withMessage("must match password")'),
-            CHECK('mobile', '.isLength({min: 11, max : 11})', '.withMessage("must be exactly 11 digits long")'),
-            (req, res) => { 
+            CHECK('name', 'min: 5', '', 'must be at least 5 chars long'),
+            CHECK('email', '', '', '', 'must be a valid email address'),
+            CHECK('mobile', 'min: 10', 'max : 11', 'must be exactly 11 digits long'),
+            CHECK2('password', 'min: 5', 'max: 8', 'must be at least 5 chars long', 'must contain a number'),
+            CHECK3('confirmPassword', 'must match password'),
+            (req, res) => {
                 const errors = validationResult(req);
                 if (!errors.isEmpty()) {
                     return res.status(400).json({ errors: errors.array() });
@@ -173,7 +175,7 @@ const allFunctions = (app) => {
                     userData.id = allData[prop].length + 1;
                     allData[prop].push(userData)
                     writeFile(dbName, allData)
-                    res.send(req.body.name)
+                    res.send(userData)
                 })
             })
     return { writeFile, modify, GET, GETID, POST, PUT, DELETE, POSTSIGNIN, SIGNUP, STUDENTREG, POSTUSER, CHECK, IFELSE }
