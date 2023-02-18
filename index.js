@@ -12,8 +12,7 @@ app.use(cors({
     credentials: true, // <= Accept credentials (cookies) sent by the client
 }));
 
-router(app)
-
+app.use(router);
 app.listen(port, () => {
     console.log(`App Listening on port ${port}`)
 })
