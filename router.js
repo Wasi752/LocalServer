@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 })
 createCRUD('/employees', 'employeeDatabase.json', 'employees', [
     ['name', check('name').exists().withMessage('name must be provided').isLength({min : 1, max : 20}).withMessage('name must be between 1 to 20 chars')],
-    ['father', check('father').exists().withMessage('father must be provided').isLength({min : 1, max : 20}).withMessage('father must be between 1 to 20 chars')],
-    ['mother', check('mother').exists().withMessage('mother must be provided').isLength({min : 1, max : 20}).withMessage('mother must be between 1 to 20 chars')],
+    ['father', check('father').exists().withMessage('father must be provided').isLength({min : 1, max : 30}).withMessage('father must be between 1 to 20 chars')],
+    ['mother', check('mother').exists().withMessage('mother must be provided').isLength({min : 1, max : 30}).withMessage('mother must be between 1 to 20 chars')],
     ['present_address', check('present_address').exists().withMessage('present_address must be provided').isLength({min : 1, max : 50}).withMessage('present_address must be between 1 to 20 chars')],
     ['permanent_address', check('permanent_address').exists().withMessage('permanent_address must be provided').isLength({min : 1, max : 50}).withMessage('permanent_address must be between 1 to 20 chars')],
     ['academic_achievement', check('academic_achievement').exists().withMessage('academic_achievement must be provided').isLength({min : 1, max : 50}).withMessage('academic_achievement must be between 1 to 20 chars')],
@@ -30,7 +30,7 @@ createCRUD('/employees', 'employeeDatabase.json', 'employees', [
 // createCRUD('/madrasa', 'registration.json', 'madrasas', ['name_arabic', 'name_bangala', 'name_english', 'muhtamim']);
 // createCRUD('/studentRegistration', 'registration.json', 'students', ['name', 'name_arabic', 'name_english', 'father', 'brith'])
 // createCRUD('/users', 'madrasa.json', 'users', ['name', 'password', 'mobile']);
-// ======== ---------------------------- ===========
+// //======== ---------------------------- ===========
 
 // router.post('/studentRegistration', (req, res) => {
 //     fs.readFile('registration.json', "utf8", (err, data) => {

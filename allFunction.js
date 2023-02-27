@@ -7,6 +7,7 @@ const allFunctions = (app) => {
         const result = callBack(allData)
         res.send(result)
     });
+    const writeFile = (dbName, data) => fs.writeFile('databases/' + dbName, JSON.stringify(data), () => { });
     const GET = (rurl, dbName, prop) => app.get(rurl, (req, res) => {
         modify(dbName, (data) => {
             return data[prop];
@@ -19,8 +20,7 @@ const allFunctions = (app) => {
         }, res);
     });
 
-    const POST = (rurl, dbName, prop, arr) => app.post(rurl,
-        arr.map(x => x[1]),
+    const POST = (rurl, dbName, prop, arr) => app.post(rurl, arr.map(x => x[1]),
         (req, res) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -34,9 +34,7 @@ const allFunctions = (app) => {
                 return postData;
             }, res)
         })
-    const PUT = (rurl, dbName, prop, arr) => app.put(rurl,
-        arr.map(x => x[1]),
-        (req, res) => {
+    const PUT = (rurl, dbName, prop, arr) => app.put(rurl, arr.map(x => x[1]), (req, res) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
@@ -62,7 +60,6 @@ const allFunctions = (app) => {
         PUT(baseRoute + '/:id', dbName, tableName, properties);
         DELETE(baseRoute + '/:id', dbName, tableName)
     }
-    const writeFile = (dbName, data) => fs.writeFile(dbName, JSON.stringify(data), () => { });
     return { writeFile, createCRUD }
 }
 module.exports = allFunctions;
