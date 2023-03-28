@@ -20,12 +20,13 @@ const allFunctions = (app) => {
         }, res);
     });
 
-    const POST = (rurl, dbName, prop, arr) => app.post(rurl, arr.map(x => x[1]),
+    const POST = (rurl, dbName, prop, arr) => app.post(rurl, 
+        // arr.map(x => x[1]),
         (req, res) => {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty()) {
+            //     return res.status(400).json({ errors: errors.array() });
+            // }
             modify(dbName, (allData) => {
                 const postData = req.body;
                 postData.id = allData[prop].length + 1;
@@ -34,11 +35,13 @@ const allFunctions = (app) => {
                 return postData;
             }, res)
         })
-    const PUT = (rurl, dbName, prop, arr) => app.put(rurl, arr.map(x => x[1]), (req, res) => {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
+    const PUT = (rurl, dbName, prop, arr) => app.put(rurl, 
+        //arr.map(x => x[1]), 
+        (req, res) => {
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty()) {
+            //     return res.status(400).json({ errors: errors.array() });
+            // }
             modify(dbName, (allData) => {
                 const dataByID = allData[prop].filter(x => x.id == req.params.id)[0];
                 arr.map(x => x[0]).forEach((prop) => dataByID[prop] = req.body[prop]);
